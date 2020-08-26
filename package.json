@@ -1,0 +1,68 @@
+{
+	"name": "dash",
+	"description": "The family dashboad",
+	"version": "1.0.0",
+	"homepage": "",
+	"private": true,
+	"author": {
+		"name": "Dominik Wilkowski",
+		"email": "Hi@Dominik-Wilkowski.com",
+		"url": "https://dominik-wilkowski.com/"
+	},
+	"contributors": [
+		{
+			"name": "Dominik Wilkowski",
+			"email": "Hi@Dominik-Wilkowski.com",
+			"url": "https://dominik-wilkowski.com/"
+		}
+	],
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/dominikwilkowski/dash.git"
+	},
+	"bugs": {
+		"url": "https://github.com/dominikwilkowski/dash/issues"
+	},
+	"licenses": [
+		{
+			"type": "GPL-3.0",
+			"url": "https://github.com/dominikwilkowski/dash/blob/master/LICENSE"
+		}
+	],
+	"license": "GPL-3.0",
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"eject": "react-scripts eject",
+		"test": "yarn test:format",
+		"test:format": "prettier --list-different \"**/*.{js,md,mdx,json,html}\"",
+		"format": "prettier --write \"**/*.{js,md,mdx,json,html}\"",
+		"nuke": "rm -rf node_modules && rm yarn.lock"
+	},
+	"dependencies": {
+		"@testing-library/jest-dom": "^4.2.4",
+		"@testing-library/react": "^9.3.2",
+		"@testing-library/user-event": "^7.1.2",
+		"react": "^16.13.1",
+		"react-dom": "^16.13.1",
+		"react-scripts": "3.4.3"
+	},
+	"devDependencies": {
+		"prettier": "^2.1.0"
+	},
+	"eslintConfig": {
+		"extends": "react-app"
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 2 chrome version",
+			"last 2 firefox version",
+			"last 2 safari version"
+		]
+	}
+}
