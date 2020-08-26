@@ -40,15 +40,14 @@
 		"nuke": "rm -rf node_modules && rm yarn.lock"
 	},
 	"dependencies": {
-		"@testing-library/jest-dom": "^4.2.4",
-		"@testing-library/react": "^9.3.2",
-		"@testing-library/user-event": "^7.1.2",
+		"@emotion/core": "^10.0.35",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
+		"react-router-dom": "^5.2.0",
 		"react-scripts": "3.4.3"
 	},
 	"devDependencies": {
-		"prettier": "^2.1.0"
+		"prettier": "^2.1.1"
 	},
 	"eslintConfig": {
 		"extends": "react-app"
