@@ -24,6 +24,25 @@ const USERS = {
 	[process.env.USER2]: 'walker',
 };
 
+// HEADERS FOR LOG
+console.log('\n\n');
+cfonts.say('Dash', {
+	font: 'slick',
+	colors: ['#EF0FFF', 'gray'],
+	letterSpacing: 0,
+	align: 'center',
+	space: false,
+});
+
+if (DEBUG) {
+	cfonts.say('debug mode', {
+		font: 'chrome',
+		colors: ['#EA1C2E', '#FFD520', '#EA1C2E'],
+		align: 'center',
+		space: false,
+	});
+}
+
 /**
  * A function to report back to stdout what's happening
  *
@@ -96,13 +115,16 @@ function getVersion(req, res, next) {
  */
 const port = 5556;
 const server = restify.createServer({ name: 'Dash-API' });
-const cors = corsMiddleware({
-	origins: ['http://127.0.0.1:3000', 'http://localhost:3000'],
-});
-
 server.use(restify.plugins.bodyParser());
-server.pre(cors.preflight);
-server.use(cors.actual);
+
+if (process.env.LOCAL === 'true') {
+	const cors = corsMiddleware({
+		origins: ['http://127.0.0.1:3000', 'http://localhost:3000'],
+	});
+	server.pre(cors.preflight);
+	server.use(cors.actual);
+	debug('CORS enabled', 'report');
+}
 
 // routes
 server.post('/dash/navigation', getNavigation);
@@ -110,25 +132,6 @@ server.get('/dash/version', getVersion);
 
 if (process.argv.includes('serve')) {
 	server.listen(port, () => {
-		console.log('\n\n');
-
-		cfonts.say('Dash', {
-			font: 'slick',
-			colors: ['#EF0FFF', 'gray'],
-			letterSpacing: 0,
-			align: 'center',
-			space: false,
-		});
-
-		if (DEBUG) {
-			cfonts.say('debug mode', {
-				font: 'chrome',
-				colors: ['#EA1C2E', '#FFD520', '#EA1C2E'],
-				align: 'center',
-				space: false,
-			});
-		}
-
 		cfonts.say(`${server.name} listening at 127.0.0.1:${port}`, {
 			font: 'console',
 			colors: ['white'],

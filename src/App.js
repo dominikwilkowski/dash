@@ -11,16 +11,22 @@ export function App() {
 	const [remoteNav, setRemoteNav] = useState([]);
 
 	useEffect(() => {
-		const options = {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ user: process.env.REACT_APP_USER }),
-		};
+		(async function () {
+			const options = {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ user: process.env.REACT_APP_USER }),
+			};
 
-		// fetch('https://dominik-wilkowski.com/dash/navigation', options)
-		fetch('http://localhost:5556/dash/navigation', options)
-			.then((response) => response.json())
-			.then((data) => setRemoteNav(data));
+			const url =
+				process.env.REACT_APP_LOCAL === 'true'
+					? 'http://localhost:5556/dash/navigation'
+					: 'https://dominik-wilkowski.com/dash/navigation';
+
+			const response = await fetch(url, options);
+			const data = await response.json();
+			setRemoteNav(data);
+		})();
 	}, []);
 
 	const supportedComponents = {
