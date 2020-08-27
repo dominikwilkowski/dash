@@ -3,6 +3,8 @@
 	"version": "1.0.0",
 	"private": true,
 	"scripts": {
+		"start": "node dashServer.js serve",
+		"start:dev": "node dashServer.js serve debug",
 		"nuke": "rm -rf node_modules && rm yarn.lock"
 	},
 	"engines": {
@@ -13,6 +15,7 @@
 		"chalk": "^4.1.0",
 		"dotenv": "^8.2.0",
 		"restify": "^8.5.1",
-		"restify-cors-middleware": "^1.1.1"
+		"restify-cors-middleware": "^1.1.1",
+		"restify-errors": "^8.0.2"
 	}
 }

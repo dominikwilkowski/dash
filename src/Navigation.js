@@ -1,17 +1,20 @@
 /** @jsx jsx */
 
-import { jsx } from '@emotion/core';
 import { Link } from 'react-router-dom';
+import { jsx } from '@emotion/core';
 
-export function Navigation() {
-	return (
-		<ul>
-			<li>
-				<Link to="/">Shopping</Link>
-			</li>
-			<li>
-				<Link to="/mort">Mort</Link>
-			</li>
-		</ul>
-	);
+export function Navigation({ nav }) {
+	if (nav.length === 0) {
+		return null;
+	} else {
+		return (
+			<ul>
+				{nav.map(({ name, url }) => (
+					<li key={url}>
+						<Link to={url}>{name}</Link>
+					</li>
+				))}
+			</ul>
+		);
+	}
 }

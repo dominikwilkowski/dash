@@ -37,11 +37,13 @@
 		"test": "yarn test:format",
 		"test:format": "prettier --list-different \"**/*.{js,md,mdx,json,html}\"",
 		"format": "prettier --write \"**/*.{js,md,mdx,json,html}\"",
+		"start:server": "cd server/ && yarn start",
+		"deploy:server": "rsync --exclude=db/ -avzhe ssh --progress ./server/* deploy@dominik-wilkowski.com:/var/www/html/dash && ssh deploy@dominik-wilkowski.com chmod +rx /var/www/html/dash/starter.sh",
+		"deploy:restart": "ssh deploy@dominik-wilkowski.com forever restart /www/dash/dashServer.js",
 		"nuke": "rm -rf node_modules && rm yarn.lock"
 	},
 	"dependencies": {
 		"@emotion/core": "^10.0.35",
-		"dotenv": "^8.2.0",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
 		"react-router-dom": "^5.2.0",
