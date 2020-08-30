@@ -4,7 +4,7 @@ const restify = require('restify');
 const corsMiddleware = require('restify-cors-middleware');
 
 const { DEBUG, debug } = require('./utils.js');
-const { getNavigation, getVersion, writeAll } = require('./routes.js');
+const { checkUser, getNavigation, getVersion, writeAll } = require('./routes.js');
 
 // HEADERS FOR LOG
 console.log('\n\n');
@@ -42,6 +42,7 @@ if (process.env.LOCAL === 'true') {
 }
 
 // routes
+server.post('/dash/checkuser', checkUser);
 server.post('/dash/navigation', getNavigation);
 server.post('/dash/writeall', writeAll);
 server.get('/dash/version', getVersion);

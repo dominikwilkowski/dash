@@ -11,27 +11,26 @@ export function App() {
 	const [remoteNav, setRemoteNav] = useState([]);
 	const [user, setUser] = useState(localStorage.getItem('dash-user') || null);
 	const [input, setInput] = useState('');
+	const [error, setError] = useState('');
+
+	const url =
+		process.env.REACT_APP_LOCAL === 'true'
+			? 'http://localhost:5556/dash'
+			: 'https://dominik-wilkowski.com/dash';
 
 	useEffect(() => {
 		if (user) {
 			(async function () {
-				const options = {
+				const response = await fetch(`${url}/navigation`, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({ user }),
-				};
-
-				const url =
-					process.env.REACT_APP_LOCAL === 'true'
-						? 'http://localhost:5556/dash/navigation'
-						: 'https://dominik-wilkowski.com/dash/navigation';
-
-				const response = await fetch(url, options);
+				});
 				const data = await response.json();
 				setRemoteNav(data);
 			})();
 		}
-	}, [user]);
+	}, [user, url]);
 
 	const supportedComponents = {
 		Shopping: <Shopping />,
@@ -40,9 +39,21 @@ export function App() {
 
 	const handleLogin = async (event) => {
 		event.preventDefault();
-		// TODO verify user
-		localStorage.setItem('dash-user', input);
-		setUser(input);
+		setError('');
+
+		const response = await fetch(`${url}/checkuser`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ user: input }),
+		});
+		const data = await response.json();
+
+		if (data.user === 'Found') {
+			localStorage.setItem('dash-user', input);
+			setUser(input);
+		} else {
+			setError('User could not be found');
+		}
 	};
 
 	const handleLogout = () => {
@@ -57,6 +68,7 @@ export function App() {
 					User:{' '}
 					<input type="text" value={input} onChange={(event) => setInput(event.target.value)} />
 					<button type="submit">Login</button>
+					{error && <span>{error}</span>}
 				</form>
 			</main>
 		);

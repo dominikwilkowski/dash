@@ -9,6 +9,27 @@ const { DEBUG, USERS, debug, isUserMissing, getDB, writeDB } = require('./utils.
  * @param  {object}   res  - The result object from express
  * @param  {function} next - The next function from express
  */
+function checkUser(req, res, next) {
+	debug('Checking user', 'interaction', req);
+
+	const { user } = req.body;
+	const userMissing = isUserMissing(user);
+	if (userMissing) {
+		res.send({ user: 'Not found' });
+		return next(userMissing);
+	}
+
+	res.send({ user: 'Found' });
+	return next();
+}
+
+/**
+ * Getting the navigation
+ *
+ * @param  {object}   req  - The request object from express
+ * @param  {object}   res  - The result object from express
+ * @param  {function} next - The next function from express
+ */
 function getNavigation(req, res, next) {
 	debug('Looking up navigation', 'interaction', req);
 
@@ -66,6 +87,7 @@ function getVersion(req, res, next) {
 }
 
 module.exports = {
+	checkUser,
 	getNavigation,
 	getVersion,
 	writeAll,
