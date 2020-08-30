@@ -1,11 +1,13 @@
 /** @jsx jsx */
 
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { Navigation } from './Navigation';
-import { Shopping } from './Shopping';
+import { Fragment, useEffect, useState } from 'react';
 import { jsx } from '@emotion/core';
-import { Mort } from './Mort';
+
+import { Navigation } from './Navigation';
+import { Shopping } from './shopping';
+import { Mort } from './mort';
+import { URL } from './utils';
 
 export function App() {
 	const [remoteNav, setRemoteNav] = useState([]);
@@ -13,15 +15,10 @@ export function App() {
 	const [input, setInput] = useState('');
 	const [error, setError] = useState('');
 
-	const url =
-		process.env.REACT_APP_LOCAL === 'true'
-			? 'http://localhost:5556/dash'
-			: 'https://dominik-wilkowski.com/dash';
-
 	useEffect(() => {
 		if (user) {
 			(async function () {
-				const response = await fetch(`${url}/navigation`, {
+				const response = await fetch(`${URL}/navigation`, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({ user }),
@@ -30,18 +27,18 @@ export function App() {
 				setRemoteNav(data);
 			})();
 		}
-	}, [user, url]);
+	}, [user]);
 
 	const supportedComponents = {
-		Shopping: <Shopping />,
-		Mort: <Mort />,
+		Shopping: <Shopping user={user} />,
+		Mort: <Mort user={user} />,
 	};
 
 	const handleLogin = async (event) => {
 		event.preventDefault();
 		setError('');
 
-		const response = await fetch(`${url}/checkuser`, {
+		const response = await fetch(`${URL}/checkuser`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ user: input }),
@@ -61,35 +58,32 @@ export function App() {
 		setUser(null);
 	};
 
-	if (!user) {
-		return (
-			<main>
+	return (
+		<main>
+			{error ? (
 				<form onSubmit={handleLogin}>
 					User:{' '}
 					<input type="text" value={input} onChange={(event) => setInput(event.target.value)} />
 					<button type="submit">Login</button>
 					{error && <span>{error}</span>}
 				</form>
-			</main>
-		);
-	} else {
-		return (
-			<main>
-				<h1>Headline</h1>
-				<button type="button" onClick={handleLogout}>
-					Logout
-				</button>
-				<Router>
-					<Navigation nav={remoteNav} />
-					<Switch>
-						{remoteNav.map(({ name, url }) => (
-							<Route exact path={url} key={url}>
-								{supportedComponents[name]}
-							</Route>
-						))}
-					</Switch>
-				</Router>
-			</main>
-		);
-	}
+			) : (
+				<Fragment>
+					<button type="button" onClick={handleLogout}>
+						Logout
+					</button>
+					<Router>
+						<Navigation nav={remoteNav} />
+						<Switch>
+							{remoteNav.map(({ name, url }) => (
+								<Route exact path={url} key={url}>
+									{supportedComponents[name]}
+								</Route>
+							))}
+						</Switch>
+					</Router>
+				</Fragment>
+			)}
+		</main>
+	);
 }

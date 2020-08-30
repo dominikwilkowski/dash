@@ -1,0 +1,1 @@
+export { Mort } from './Mort';
