@@ -60,7 +60,7 @@ export function App() {
 
 	return (
 		<main>
-			{error ? (
+			{!user ? (
 				<form onSubmit={handleLogin}>
 					User:{' '}
 					<input type="text" value={input} onChange={(event) => setInput(event.target.value)} />
