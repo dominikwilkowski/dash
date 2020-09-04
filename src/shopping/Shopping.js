@@ -25,13 +25,18 @@ export function Shopping({ user }) {
 		setInput('');
 	};
 
-	const removeItem = async (id) => {
-		const data = await makeRestCall('/deleteshopping', { id });
+	const toggleItem = async (id) => {
+		const data = await makeRestCall('/toggleshopping', { id });
 		setItems(data.shopping);
 	};
 
-	const toggleItem = async (id) => {
-		const data = await makeRestCall('/toggleshopping', { id });
+	const editItem = async (id, text) => {
+		const data = await makeRestCall('/editshopping', { id, text });
+		setItems(data.shopping);
+	};
+
+	const removeItem = async (id) => {
+		const data = await makeRestCall('/deleteshopping', { id });
 		setItems(data.shopping);
 	};
 
@@ -48,7 +53,7 @@ export function Shopping({ user }) {
 				}}
 			>
 				<Form addItem={addItem} />
-				<List items={items} removeItem={removeItem} toggleItem={toggleItem} />
+				<List items={items} removeItem={removeItem} toggleItem={toggleItem} editItem={editItem} />
 			</div>
 		</div>
 	);

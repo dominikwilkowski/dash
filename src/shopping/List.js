@@ -2,7 +2,10 @@
 
 import { jsx } from '@emotion/core';
 
-export function List({ items, removeItem, toggleItem }) {
+import { EditForm } from './EditForm';
+import { AsyncButton } from './AsyncButton';
+
+export function List({ items, removeItem, toggleItem, editItem }) {
 	const comparator = (a, b) => {
 		if (a.isDone !== b.isDone) {
 			return a.isDone ? 1 : -1;
@@ -20,17 +23,17 @@ export function List({ items, removeItem, toggleItem }) {
 						textDecoration: isDone ? 'line-through' : 'none',
 					}}
 				>
-					<button type="button" onClick={() => toggleItem(id)}>
+					<AsyncButton onClick={() => toggleItem(id)}>
 						<span role="img" aria-label="Toggle this item">
 							✅
 						</span>
-					</button>
-					{text}
-					<button type="button" onClick={() => removeItem(id)}>
+					</AsyncButton>
+					<EditForm handleChange={editItem} text={text} id={id} />
+					<AsyncButton onClick={() => removeItem(id)} noLoadingReset>
 						<span role="img" aria-label="Delete this item">
 							🗑
 						</span>
-					</button>
+					</AsyncButton>
 				</li>
 			))}
 		</ul>

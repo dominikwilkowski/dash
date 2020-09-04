@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
-import { jsx } from '@emotion/core';
 import { useState } from 'react';
+import { jsx } from '@emotion/core';
 
 export function Form({ addItem }) {
 	const [text, setText] = useState('');
