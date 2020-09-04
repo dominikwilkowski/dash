@@ -10,6 +10,7 @@ const {
 	getShopping,
 	addShopping,
 	editShopping,
+	toggleDoneShopping,
 	deleteShopping,
 	getVersion,
 	writeAll,
@@ -56,6 +57,7 @@ server.post('/dash/navigation', getNavigation);
 server.post('/dash/shopping', getShopping);
 server.post('/dash/addshopping', addShopping);
 server.post('/dash/editshopping', editShopping);
+server.post('/dash/toggleshopping', toggleDoneShopping);
 server.post('/dash/deleteshopping', deleteShopping);
 server.post('/dash/writeall', writeAll);
 server.get('/dash/version', getVersion);

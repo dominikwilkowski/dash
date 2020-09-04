@@ -3,12 +3,12 @@
 import { jsx } from '@emotion/core';
 import { useState } from 'react';
 
-export function Form({ setItems }) {
-	const [item, setItem] = useState('');
+export function Form({ addItem }) {
+	const [text, setText] = useState('');
 
 	return (
-		<form>
-			<input type="text" value={item} onChange={(event) => setItem(event.target.value)} />
+		<form onSubmit={(event) => addItem(event, text, setText)}>
+			<input type="text" value={text} onChange={(event) => setText(event.target.value)} />
 			<button type="submit">Save</button>
 		</form>
 	);

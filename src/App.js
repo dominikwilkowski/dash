@@ -5,9 +5,9 @@ import { Fragment, useEffect, useState } from 'react';
 import { jsx } from '@emotion/core';
 
 import { Navigation } from './Navigation';
+import { makeRestCall } from './utils';
 import { Shopping } from './shopping';
 import { Mort } from './mort';
-import { URL } from './utils';
 
 export function App() {
 	const [remoteNav, setRemoteNav] = useState([]);
@@ -18,12 +18,7 @@ export function App() {
 	useEffect(() => {
 		if (user) {
 			(async function () {
-				const response = await fetch(`${URL}/navigation`, {
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ user }),
-				});
-				const data = await response.json();
+				const data = await makeRestCall('/navigation');
 				setRemoteNav(data);
 			})();
 		}
@@ -38,12 +33,7 @@ export function App() {
 		event.preventDefault();
 		setError('');
 
-		const response = await fetch(`${URL}/checkuser`, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ user: input }),
-		});
-		const data = await response.json();
+		const data = await makeRestCall('/checkuser', { user: input });
 
 		if (data.user === 'Found') {
 			localStorage.setItem('dash-user', input);

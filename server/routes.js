@@ -117,6 +117,33 @@ function editShopping(req, res, next) {
 }
 
 /**
+ * Toggle an item in the shopping list
+ *
+ * @param  {object}   req  - The request object from express
+ * @param  {object}   res  - The result object from express
+ * @param  {function} next - The next function from express
+ */
+function toggleDoneShopping(req, res, next) {
+	debug('Toggle an item status in shopping list', 'interaction', req);
+
+	const { user, id } = req.body;
+	const userMissing = isUserMissing(user);
+	if (userMissing) {
+		return next(userMissing);
+	}
+
+	const db = getDB(user);
+	db.shopping = db.shopping.map(({ id: itemID, ...rest }) =>
+		itemID == id ? { id: itemID, ...rest, isDone: !rest.isDone } : { id: itemID, ...rest }
+	);
+
+	writeDB(user, db);
+
+	res.send({ id, shopping: db.shopping });
+	return next();
+}
+
+/**
  * Delete an item from the shopping list
  *
  * @param  {object}   req  - The request object from express
@@ -190,6 +217,7 @@ module.exports = {
 	getShopping,
 	addShopping,
 	editShopping,
+	toggleDoneShopping,
 	deleteShopping,
 	getVersion,
 	writeAll,

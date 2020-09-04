@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { jsx } from '@emotion/core';
 
-import { URL } from '../utils';
+import { makeRestCall } from '../utils';
 import { Form } from './Form';
 import { List } from './List';
 
@@ -12,15 +12,28 @@ export function Shopping({ user }) {
 
 	useEffect(() => {
 		(async function () {
-			const response = await fetch(`${URL}/shopping`, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ user }),
-			});
-			const data = await response.json();
+			const data = await makeRestCall('/shopping');
 			setItems(data);
 		})();
 	}, [user]);
+
+	const addItem = async (event, text, setInput) => {
+		event.preventDefault();
+
+		const data = await makeRestCall('/addshopping', { text });
+		setItems(data.shopping);
+		setInput('');
+	};
+
+	const removeItem = async (id) => {
+		const data = await makeRestCall('/deleteshopping', { id });
+		setItems(data.shopping);
+	};
+
+	const toggleItem = async (id) => {
+		const data = await makeRestCall('/toggleshopping', { id });
+		setItems(data.shopping);
+	};
 
 	return (
 		<div
@@ -34,8 +47,8 @@ export function Shopping({ user }) {
 					margin: 'auto',
 				}}
 			>
-				<Form setItems={setItems} />
-				<List items={items} />
+				<Form addItem={addItem} />
+				<List items={items} removeItem={removeItem} toggleItem={toggleItem} />
 			</div>
 		</div>
 	);
