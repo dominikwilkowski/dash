@@ -36,15 +36,22 @@ export function App() {
 
 	const handleLogin = async (event) => {
 		event.preventDefault();
-		setLoginError('');
+		if (input) {
+			setLoginError('');
 
-		const data = await makeRestCall('/checkuser', { user: input });
+			let data;
+			try {
+				data = await makeRestCall('/checkuser', { user: input });
 
-		if (data.user === 'Found') {
-			localStorage.setItem('dash-user', input);
-			setUser(input);
-		} else {
-			setLoginError('User could not be found');
+				if (data.user === 'Found') {
+					localStorage.setItem('dash-user', input);
+					setUser(input);
+				} else {
+					setLoginError('User could not be found');
+				}
+			} catch (error) {
+				setLoginError('Unable to connect to the server: ' + error.toString());
+			}
 		}
 	};
 

@@ -1,3 +1,5 @@
+import 'whatwg-fetch';
+
 /**
  * A function to load data from the REST api
  */
