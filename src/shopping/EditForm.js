@@ -21,6 +21,8 @@ export function EditForm({ text: defaultText, id, handleChange, ...rest }) {
 					value={text}
 					onChange={(event) => setText(event.target.value)}
 					autoFocus
+					onBlur={() => setEditing(false)}
+					onKeyDown={(event) => (event.keyCode === 27 ? setEditing(false) : null)}
 				/>
 				<button type="submit">Save</button>
 			</form>
