@@ -24,6 +24,7 @@ export function Form({ addItem }) {
 					flexGrow: 1,
 					border: '1px solid #000',
 					borderRadius: 0,
+					apperance: 'none',
 				}}
 			/>
 			<button

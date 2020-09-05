@@ -65,7 +65,6 @@ export function App() {
 				<form
 					onSubmit={handleLogin}
 					css={{
-						display: 'flex',
 						maxWidth: '60rem',
 						background: '#fff',
 						margin: '5rem auto',
@@ -74,45 +73,58 @@ export function App() {
 						boxShadow: 'rgba(0, 0, 0, 0.3) 0 0 30px',
 					}}
 				>
-					<label
-						htmlFor="login"
-						css={{
-							display: 'inline-block',
-							marginRight: '0.5rem',
-							fontSize: '1.5rem',
-							alignSelf: 'center',
-						}}
-					>
-						User login
-					</label>
-					<input
-						id="login"
-						type="text"
-						value={input}
-						onChange={(event) => setInput(event.target.value)}
-						css={{
-							flexGrow: 1,
-							fontSize: '1.5rem',
-							padding: '0.5rem',
-							border: '1px solid #000',
-							borderRadius: 0,
-						}}
-					/>
-					<button
-						type="submit"
-						css={{
-							background: 'transparent',
-							border: '1px solid #000',
-							borderLeft: 'none',
-							apperance: 'none',
-							fontSize: '1rem',
-							cursor: 'pointer',
-							lineHeight: 1,
-						}}
-					>
-						Login
-					</button>
-					{loginError && <span>{loginError}</span>}
+					<div css={{ display: 'flex' }}>
+						<label
+							htmlFor="login"
+							css={{
+								display: 'inline-block',
+								marginRight: '0.5rem',
+								fontSize: '1.5rem',
+								alignSelf: 'center',
+							}}
+						>
+							User login
+						</label>
+						<input
+							id="login"
+							type="text"
+							value={input}
+							onChange={(event) => setInput(event.target.value)}
+							css={{
+								flexGrow: 1,
+								fontSize: '1.5rem',
+								padding: '0.5rem',
+								border: '1px solid #000',
+								borderRadius: 0,
+								apperance: 'none',
+							}}
+						/>
+						<button
+							type="submit"
+							css={{
+								background: 'transparent',
+								border: '1px solid #000',
+								borderLeft: 'none',
+								apperance: 'none',
+								fontSize: '1rem',
+								cursor: 'pointer',
+								lineHeight: 1,
+							}}
+						>
+							Login
+						</button>
+					</div>
+					{loginError && (
+						<span
+							css={{
+								display: 'block',
+								marginTop: '0.5rem',
+								color: 'red',
+							}}
+						>
+							{loginError}
+						</span>
+					)}
 				</form>
 			) : (
 				<Fragment>
