@@ -10,13 +10,31 @@ export function Navigation({ nav }) {
 		return null;
 	} else {
 		return (
-			<ul>
+			<ul
+				css={{
+					display: 'inline-block',
+					listStyle: 'none',
+					padding: 0,
+					margin: 0,
+				}}
+			>
 				{nav.map(({ name, url }) => (
-					<li key={url}>
+					<li
+						key={url}
+						css={{
+							display: 'inline-block',
+							margin: '0 0.5rem',
+						}}
+					>
 						<Link
 							to={url}
 							css={{
-								textDecoration: pathname === url ? 'underline' : 'none',
+								display: 'inline-block',
+								fontWeight: pathname === url ? 900 : 400,
+								padding: '1rem',
+								':hover': {
+									textDecoration: 'none',
+								},
 							}}
 						>
 							{name}

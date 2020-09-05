@@ -43,18 +43,29 @@ export function Shopping({ user }) {
 	return (
 		<div
 			css={{
-				display: 'grid',
-				margin: 'auto',
+				maxWidth: '60rem',
+				margin: '0 auto',
+				padding: '2rem 4vw',
+				background: '#fff',
+				boxShadow: 'rgba(0, 0, 0, 0.3) 0 0 30px',
+				border: '3px solid #000',
 			}}
 		>
-			<div
+			<h1
 				css={{
-					margin: 'auto',
+					fontFamily:
+						'"Playfair Display", "PT Serif", Cambria, "Hoefler Text", Utopia, "Liberation Serif", "Nimbus Roman No9 L Regular", Times, "Times New Roman", serif',
+					fontStyle: 'italic',
+					fontSize: '3.5rem',
+					margin: '0 0 1rem 0',
+					textAlign: 'center',
+					fontWeight: 700,
 				}}
 			>
-				<Form addItem={addItem} />
-				<List items={items} removeItem={removeItem} toggleItem={toggleItem} editItem={editItem} />
-			</div>
+				Shopping
+			</h1>
+			<Form addItem={addItem} />
+			<List items={items} removeItem={removeItem} toggleItem={toggleItem} editItem={editItem} />
 		</div>
 	);
 }

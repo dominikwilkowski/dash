@@ -15,7 +15,19 @@ export function AsyncButton({ children, onClick, noLoadingReset, ...rest }) {
 	};
 
 	return (
-		<button type="button" onClick={handleOnClick} disabled={loading}>
+		<button
+			type="button"
+			onClick={handleOnClick}
+			disabled={loading}
+			css={{
+				background: 'transparent',
+				border: 'none',
+				apperance: 'none',
+				fontSize: '1rem',
+				cursor: 'pointer',
+				lineHeight: 1,
+			}}
+		>
 			{children}
 		</button>
 	);

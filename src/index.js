@@ -10,8 +10,23 @@ ReactDOM.render(
 			styles={{
 				'body, html': {
 					height: '100%',
-					padding: 0,
+				},
+				body: {
+					fontFamily:
+						'system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"',
+					lineHeight: 1.2,
 					margin: 0,
+					padding: 0,
+					background: 'lightseagreen',
+				},
+				a: {
+					color: '#000',
+				},
+				'*, *:before, *:after': {
+					boxSizing: 'border-box',
+					textRendering: 'optimizeLegibility',
+					fontKerning: 'auto',
+					MozOsxFontSmoothing: 'grayscale',
 				},
 			}}
 		/>
