@@ -69,70 +69,101 @@ export function App() {
 			}}
 		>
 			{!user ? (
-				<form
-					onSubmit={handleLogin}
-					css={{
-						maxWidth: '60rem',
-						background: '#fff',
-						margin: '5rem auto',
-						padding: '1.5rem',
-						border: '3px solid #000',
-						boxShadow: 'rgba(0, 0, 0, 0.3) 0 0 30px',
-					}}
-				>
-					<div css={{ display: 'flex' }}>
-						<label
-							htmlFor="login"
-							css={{
-								display: 'inline-block',
-								marginRight: '0.5rem',
-								fontSize: '1.5rem',
-								alignSelf: 'center',
-							}}
-						>
-							User login
-						</label>
-						<input
-							id="login"
-							type="text"
-							value={input}
-							onChange={(event) => setInput(event.target.value)}
-							css={{
-								flexGrow: 1,
-								fontSize: '1.5rem',
-								padding: '0.5rem',
-								border: '1px solid #000',
-								borderRadius: 0,
-								apperance: 'none',
-							}}
-						/>
-						<button
-							type="submit"
-							css={{
-								background: 'transparent',
-								border: '1px solid #000',
-								borderLeft: 'none',
-								apperance: 'none',
-								fontSize: '1rem',
-								cursor: 'pointer',
-								lineHeight: 1,
-							}}
-						>
-							Login
-						</button>
-					</div>
-					{loginError && (
-						<span
-							css={{
-								display: 'block',
-								marginTop: '0.5rem',
-								color: 'red',
-							}}
-						>
-							{loginError}
-						</span>
-					)}
-				</form>
+				<Fragment>
+					<h1
+						css={{
+							fontFamily:
+								'"Playfair Display", "PT Serif", Cambria, "Hoefler Text", Utopia, "Liberation Serif", "Nimbus Roman No9 L Regular", Times, "Times New Roman", serif',
+							fontStyle: 'italic',
+							fontSize: '20vw',
+							margin: 0,
+							textAlign: 'center',
+							fontWeight: 700,
+							textShadow: '0 0.5rem 0.5rem #25514F',
+						}}
+					>
+						Dash
+					</h1>
+					<form
+						onSubmit={handleLogin}
+						css={{
+							maxWidth: '60rem',
+							background: '#fff',
+							margin: '2rem auto',
+							padding: '1rem 0.5rem',
+							borderTop: '3px solid #000',
+							borderBottom: '3px solid #000',
+							boxShadow: 'rgba(0, 0, 0, 0.3) 0 0 30px',
+							'@media (min-width: 500px)': {
+								padding: '1.5rem',
+							},
+							'@media (min-width: 60rem)': {
+								borderRight: '3px solid #000',
+								borderLeft: '3px solid #000',
+							},
+						}}
+					>
+						<div css={{ display: 'flex' }}>
+							<label
+								htmlFor="login"
+								css={{
+									display: 'inline-block',
+									marginRight: '0.5rem',
+									fontSize: '1rem',
+									alignSelf: 'center',
+									whiteSpace: 'nowrap',
+									'@media (min-width: 500px)': {
+										fontSize: '1.5rem',
+									},
+								}}
+							>
+								User login
+							</label>
+							<input
+								id="login"
+								type="text"
+								value={input}
+								onChange={(event) => setInput(event.target.value)}
+								css={{
+									flexGrow: 1,
+									fontSize: '1.5rem',
+									padding: '0.5rem',
+									margin: 0,
+									border: '1px solid #000',
+									borderRadius: 0,
+									apperance: 'none',
+									width: 0,
+								}}
+							/>
+							<button
+								type="submit"
+								css={{
+									background: 'transparent',
+									border: '1px solid #000',
+									borderLeft: 'none',
+									apperance: 'none',
+									fontSize: '1rem',
+									cursor: 'pointer',
+									lineHeight: 1,
+									margin: 0,
+								}}
+							>
+								Login
+							</button>
+						</div>
+						{loginError && (
+							<span
+								css={{
+									display: 'block',
+									marginTop: '0.5rem',
+									color: 'red',
+								}}
+							>
+								{loginError}
+							</span>
+						)}
+					</form>
+				</Fragment>
 			) : (
 				<Fragment>
 					{error ? (

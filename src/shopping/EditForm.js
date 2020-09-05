@@ -40,6 +40,8 @@ export function EditForm({ text: defaultText, id, handleChange, ...rest }) {
 						borderLeft: 'none',
 						borderRadius: 0,
 						apperance: 'none',
+						margin: 0,
+						width: 0,
 					}}
 				/>
 				<button
@@ -52,6 +54,7 @@ export function EditForm({ text: defaultText, id, handleChange, ...rest }) {
 						fontSize: '1rem',
 						cursor: 'pointer',
 						lineHeight: 1,
+						margin: 0,
 					}}
 				>
 					Save

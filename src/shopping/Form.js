@@ -25,6 +25,8 @@ export function Form({ addItem }) {
 					border: '1px solid #000',
 					borderRadius: 0,
 					apperance: 'none',
+					margin: 0,
+					width: 0,
 				}}
 			/>
 			<button
@@ -37,6 +39,7 @@ export function Form({ addItem }) {
 					apperance: 'none',
 					fontSize: '1rem',
 					cursor: 'pointer',
+					margin: 0,
 				}}
 			>
 				Save
