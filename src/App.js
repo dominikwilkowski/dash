@@ -95,6 +95,7 @@ export function App() {
 							fontSize: '1.5rem',
 							padding: '0.5rem',
 							border: '1px solid #000',
+							borderRadius: 0,
 						}}
 					/>
 					<button

@@ -38,6 +38,7 @@ export function EditForm({ text: defaultText, id, handleChange, ...rest }) {
 						fontWeight: 500,
 						border: '0',
 						borderLeft: 'none',
+						borderRadius: 0,
 					}}
 				/>
 				<button

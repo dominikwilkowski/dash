@@ -23,6 +23,7 @@ export function Form({ addItem }) {
 					fontSize: '1rem',
 					flexGrow: 1,
 					border: '1px solid #000',
+					borderRadius: 0,
 				}}
 			/>
 			<button
