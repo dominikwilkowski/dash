@@ -1,8 +1,3 @@
-export const URL =
-	process.env.REACT_APP_LOCAL === 'true'
-		? 'http://localhost:5556/dash'
-		: 'https://dominik-wilkowski.com/dash';
-
 /**
  * A function to load data from the REST api
  */
@@ -11,9 +6,9 @@ export async function makeRestCall(path, body = {}) {
 	let data;
 
 	const URL =
-		process.env.REACT_APP_LOCAL === 'true'
-			? 'http://localhost:5556/dash'
-			: 'https://dominik-wilkowski.com/dash';
+		process.env.NODE_ENV === 'production'
+			? 'https://dominik-wilkowski.com/dash'
+			: 'http://localhost:5556/dash';
 
 	if (user || body.user) {
 		const response = await fetch(`${URL}${path}`, {

@@ -54,12 +54,63 @@ export function App() {
 	};
 
 	return (
-		<main>
+		<main
+			css={{
+				textRendering: 'optimizeLegibility',
+				fontKerning: 'auto',
+				MozOsxFontSmoothing: 'grayscale',
+			}}
+		>
 			{!user ? (
-				<form onSubmit={handleLogin}>
-					User:{' '}
-					<input type="text" value={input} onChange={(event) => setInput(event.target.value)} />
-					<button type="submit">Login</button>
+				<form
+					onSubmit={handleLogin}
+					css={{
+						display: 'flex',
+						maxWidth: '60rem',
+						background: '#fff',
+						margin: '5rem auto',
+						padding: '1.5rem',
+						border: '3px solid #000',
+						boxShadow: 'rgba(0, 0, 0, 0.3) 0 0 30px',
+					}}
+				>
+					<label
+						htmlFor="login"
+						css={{
+							display: 'inline-block',
+							marginRight: '0.5rem',
+							fontSize: '1.5rem',
+							alignSelf: 'center',
+						}}
+					>
+						User login
+					</label>
+					<input
+						id="login"
+						type="text"
+						value={input}
+						onChange={(event) => setInput(event.target.value)}
+						css={{
+							flexGrow: 1,
+							fontSize: '1.5rem',
+							padding: '0.5rem',
+							border: '1px solid #000',
+						}}
+					/>
+					<button
+						type="submit"
+						css={{
+							background: 'transparent',
+							border: '1px solid #000',
+							borderLeft: 'none',
+							apperance: 'none',
+							fontSize: '1rem',
+							cursor: 'pointer',
+							lineHeight: 1,
+						}}
+					>
+						Login
+					</button>
 					{loginError && <span>{loginError}</span>}
 				</form>
 			) : (
@@ -68,9 +119,9 @@ export function App() {
 						<strong
 							css={{
 								display: 'block',
-								maxWidth: '30rem',
-								margin: '3rem auto',
+								padding: '5rem 1rem',
 								fontSize: '2rem',
+								textAlign: 'center',
 							}}
 						>
 							An error occured trying to reach the server. Please try again later

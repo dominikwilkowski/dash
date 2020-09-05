@@ -1,3 +1,2 @@
-dist
-cypress/
-website/.next/
+build/
+db/

@@ -44,7 +44,11 @@ server.use(restify.plugins.bodyParser());
 
 if (process.env.LOCAL === 'true') {
 	const cors = corsMiddleware({
-		origins: ['http://127.0.0.1:3000', 'http://localhost:3000'],
+		origins: [
+			'http://127.0.0.1:3000',
+			'http://localhost:3000',
+			'https://dominikwilkowski.github.io',
+		],
 	});
 	server.pre(cors.preflight);
 	server.use(cors.actual);
