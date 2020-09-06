@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { jsx } from '@emotion/core';
 
+import { rotation } from '../LoadingBtn';
 import { makeRestCall } from '../utils';
 import { Form } from './Form';
 import { List } from './List';
@@ -20,9 +21,11 @@ export function Shopping({ user }) {
 	const addItem = async (event, text, setInput) => {
 		event.preventDefault();
 
-		const data = await makeRestCall('/addshopping', { text });
-		setItems(data.shopping);
-		setInput('');
+		if (text) {
+			const data = await makeRestCall('/addshopping', { text });
+			setItems(data.shopping);
+			setInput('');
+		}
 	};
 
 	const toggleItem = async (id) => {
@@ -70,7 +73,21 @@ export function Shopping({ user }) {
 				Shopping
 			</h1>
 			<Form addItem={addItem} />
-			<List items={items} removeItem={removeItem} toggleItem={toggleItem} editItem={editItem} />
+			{items.length ? (
+				<List items={items} removeItem={removeItem} toggleItem={toggleItem} editItem={editItem} />
+			) : (
+				<div
+					css={{
+						width: '2rem',
+						height: '2rem',
+						margin: '2rem auto',
+						border: '3px solid #aaa',
+						borderTopColor: '#000',
+						borderRadius: '100%',
+						animation: `${rotation} 0.6s linear infinite`,
+					}}
+				/>
+			)}
 		</div>
 	);
 }

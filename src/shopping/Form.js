@@ -3,12 +3,21 @@
 import { useState } from 'react';
 import { jsx } from '@emotion/core';
 
+import { LoadingBtn } from '../LoadingBtn';
+
 export function Form({ addItem }) {
+	const [loading, setLoading] = useState(false);
 	const [text, setText] = useState('');
+
+	const addingItem = async (event, text, setText) => {
+		setLoading(true);
+		await addItem(event, text, setText);
+		setLoading(false);
+	};
 
 	return (
 		<form
-			onSubmit={(event) => addItem(event, text, setText)}
+			onSubmit={(event) => addingItem(event, text, setText)}
 			css={{
 				display: 'flex',
 				margin: '2rem 0',
@@ -29,21 +38,14 @@ export function Form({ addItem }) {
 					width: 0,
 				}}
 			/>
-			<button
-				type="submit"
+			<LoadingBtn
+				loading={loading}
 				css={{
 					padding: '1rem',
-					background: 'transparent',
-					border: '1px solid #000',
-					borderLeft: 'none',
-					apperance: 'none',
-					fontSize: '1rem',
-					cursor: 'pointer',
-					margin: 0,
 				}}
 			>
 				Save
-			</button>
+			</LoadingBtn>
 		</form>
 	);
 }

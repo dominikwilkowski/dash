@@ -1,65 +1,70 @@
 /** @jsx jsx */
 
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { jsx } from '@emotion/core';
 
+import { LoadingBtn } from '../LoadingBtn';
+
 export function EditForm({ text: defaultText, id, handleChange, ...rest }) {
+	const [loading, setLoading] = useState(false);
 	const [editing, setEditing] = useState(false);
 	const [text, setText] = useState(defaultText);
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
+		setLoading(true);
 		await handleChange(id, text);
 		setEditing(false);
+		setLoading(false);
 	};
 
 	if (editing) {
 		return (
-			<form
-				onSubmit={handleSubmit}
-				css={{
-					flexGrow: 1,
-					display: 'flex',
-					padding: 0,
-					margin: 0,
-				}}
-			>
-				<input
-					type="text"
-					value={text}
-					onChange={(event) => setText(event.target.value)}
-					autoFocus
-					onBlur={() => setEditing(false)}
-					onKeyDown={(event) => (event.keyCode === 27 ? setEditing(false) : null)}
+			<Fragment>
+				<form
+					onSubmit={handleSubmit}
 					css={{
+						position: 'relative',
 						flexGrow: 1,
-						fontSize: '1.2rem',
-						padding: '0.5rem',
-						fontWeight: 500,
-						border: '0',
-						borderLeft: 'none',
-						borderRadius: 0,
-						apperance: 'none',
+						display: 'flex',
+						padding: 0,
 						margin: 0,
-						width: 0,
-					}}
-				/>
-				<button
-					type="submit"
-					css={{
-						background: 'transparent',
-						border: '1px solid #000',
-						borderLeft: 'none',
-						apperance: 'none',
-						fontSize: '1rem',
-						cursor: 'pointer',
-						lineHeight: 1,
-						margin: 0,
+						zIndex: 2,
 					}}
 				>
-					Save
-				</button>
-			</form>
+					<input
+						type="text"
+						value={text}
+						onChange={(event) => setText(event.target.value)}
+						autoFocus
+						onKeyDown={(event) => (event.keyCode === 27 ? setEditing(false) : null)}
+						css={{
+							flexGrow: 1,
+							fontSize: '1.2rem',
+							padding: '0.5rem',
+							fontWeight: 500,
+							border: '1px solid #000',
+							borderRadius: 0,
+							apperance: 'none',
+							margin: 0,
+							width: 0,
+						}}
+					/>
+					<LoadingBtn loading={loading}>Save</LoadingBtn>
+				</form>
+				<div
+					onClick={() => setEditing(false)}
+					css={{
+						position: 'fixed',
+						top: 0,
+						right: 0,
+						bottom: 0,
+						left: 0,
+						background: 'transparent',
+						zIndex: 1,
+					}}
+				/>
+			</Fragment>
 		);
 	} else {
 		return (

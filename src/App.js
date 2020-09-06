@@ -5,6 +5,7 @@ import { Fragment, useEffect, useState } from 'react';
 import { jsx } from '@emotion/core';
 
 import { Navigation } from './Navigation';
+import { LoadingBtn } from './LoadingBtn';
 import { makeRestCall } from './utils';
 import { Shopping } from './shopping';
 import { Mort } from './mort';
@@ -13,6 +14,7 @@ export function App() {
 	const [remoteNav, setRemoteNav] = useState([]);
 	const [user, setUser] = useState(localStorage.getItem('dash-user') || null);
 	const [loginError, setLoginError] = useState('');
+	const [loading, setLoading] = useState(false);
 	const [input, setInput] = useState('');
 	const [error, setError] = useState('');
 
@@ -38,6 +40,7 @@ export function App() {
 		event.preventDefault();
 		if (input) {
 			setLoginError('');
+			setLoading(true);
 
 			let data;
 			try {
@@ -49,8 +52,10 @@ export function App() {
 				} else {
 					setLoginError('User could not be found');
 				}
+				setLoading(false);
 			} catch (error) {
 				setLoginError('Unable to connect to the server: ' + error.toString());
+				setLoading(false);
 			}
 		}
 	};
@@ -135,21 +140,7 @@ export function App() {
 									width: 0,
 								}}
 							/>
-							<button
-								type="submit"
-								css={{
-									background: 'transparent',
-									border: '1px solid #000',
-									borderLeft: 'none',
-									apperance: 'none',
-									fontSize: '1rem',
-									cursor: 'pointer',
-									lineHeight: 1,
-									margin: 0,
-								}}
-							>
-								Login
-							</button>
+							<LoadingBtn loading={loading}>Login</LoadingBtn>
 						</div>
 						{loginError && (
 							<span
