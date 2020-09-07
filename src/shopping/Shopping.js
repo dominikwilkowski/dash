@@ -11,11 +11,16 @@ import { List } from './List';
 export function Shopping() {
 	const [items, setItems] = useState([]);
 
+	const syncItems = async () => {
+		const data = await makeRestCall('/shopping');
+		setItems(data);
+	};
+
 	useEffect(() => {
-		(async function () {
-			const data = await makeRestCall('/shopping');
-			setItems(data);
-		})();
+		syncItems();
+		window.addEventListener('focus', syncItems, false);
+
+		return () => window.removeEventListener('focus', syncItems, false);
 	}, []);
 
 	const addItem = async (event, text, setInput) => {
