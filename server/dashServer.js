@@ -12,8 +12,9 @@ const {
 	editShopping,
 	toggleDoneShopping,
 	deleteShopping,
-	getVersion,
+	getAll,
 	writeAll,
+	getVersion,
 } = require('./routes.js');
 
 // HEADERS FOR LOG
@@ -63,6 +64,7 @@ server.post('/dash/addshopping', addShopping);
 server.post('/dash/editshopping', editShopping);
 server.post('/dash/toggleshopping', toggleDoneShopping);
 server.post('/dash/deleteshopping', deleteShopping);
+server.post('/dash/getall', getAll);
 server.post('/dash/writeall', writeAll);
 server.get('/dash/version', getVersion);
 

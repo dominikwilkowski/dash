@@ -10,7 +10,10 @@ export function AsyncButton({ children, onClick, noLoadingReset, ...rest }) {
 
 	const handleOnClick = async () => {
 		setLoading(true);
-		await onClick();
+		if (onClick) {
+			await onClick();
+		}
+
 		if (!noLoadingReset) {
 			setLoading(false);
 		}

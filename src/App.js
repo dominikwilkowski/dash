@@ -9,6 +9,7 @@ import { LoadingBtn } from './LoadingBtn';
 import { makeRestCall } from './utils';
 import { Shopping } from './shopping';
 import { Mort } from './mort';
+import { Db } from './db';
 
 export function App() {
 	const [remoteNav, setRemoteNav] = useState([]);
@@ -32,8 +33,9 @@ export function App() {
 	}, [user]);
 
 	const supportedComponents = {
-		Shopping: <Shopping user={user} />,
-		Mort: <Mort user={user} />,
+		Shopping: <Shopping />,
+		Mort: <Mort />,
+		Db: <Db />,
 	};
 
 	const handleLogin = async (event) => {

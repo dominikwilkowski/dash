@@ -169,6 +169,26 @@ function deleteShopping(req, res, next) {
 }
 
 /**
+ * Get entire database
+ *
+ * @param  {object}   req  - The request object from express
+ * @param  {object}   res  - The result object from express
+ * @param  {function} next - The next function from express
+ */
+function getAll(req, res, next) {
+	debug('Retrieve entire database', 'interaction', req);
+
+	const { user } = req.body;
+	const userMissing = isUserMissing(user);
+	if (userMissing) {
+		return next(userMissing);
+	}
+
+	res.send(getDB(user));
+	return next();
+}
+
+/**
  * Overriding entire database
  *
  * @param  {object}   req  - The request object from express
@@ -192,7 +212,7 @@ function writeAll(req, res, next) {
 		console.error(error);
 	}
 
-	res.send({ written: parsedContent ? 'successful' : 'unsuccessful' });
+	res.send(getDB(user));
 	return next();
 }
 
@@ -219,6 +239,7 @@ module.exports = {
 	editShopping,
 	toggleDoneShopping,
 	deleteShopping,
-	getVersion,
+	getAll,
 	writeAll,
+	getVersion,
 };

@@ -8,7 +8,7 @@ import { makeRestCall } from '../utils';
 import { Form } from './Form';
 import { List } from './List';
 
-export function Shopping({ user }) {
+export function Shopping() {
 	const [items, setItems] = useState([]);
 
 	useEffect(() => {
@@ -16,7 +16,7 @@ export function Shopping({ user }) {
 			const data = await makeRestCall('/shopping');
 			setItems(data);
 		})();
-	}, [user]);
+	}, []);
 
 	const addItem = async (event, text, setInput) => {
 		event.preventDefault();
