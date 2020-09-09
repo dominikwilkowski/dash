@@ -71,10 +71,7 @@ function isUserMissing(user) {
  */
 function getDB(user) {
 	return JSON.parse(
-		fs.readFileSync(
-			path.normalize(`${__dirname}/db/${USERS[user]}${DEBUG ? '-staging' : ''}.json`),
-			{ encoding: 'utf8' }
-		)
+		fs.readFileSync(path.normalize(`${__dirname}/db/${USERS[user]}.json`), { encoding: 'utf8' })
 	);
 }
 
@@ -88,11 +85,9 @@ function getDB(user) {
 function writeDB(user, content) {
 	content.name = USERS[user];
 
-	fs.writeFileSync(
-		path.normalize(`${__dirname}/db/${USERS[user]}${DEBUG ? '-staging' : ''}.json`),
-		JSON.stringify(content),
-		{ encoding: 'utf8' }
-	);
+	fs.writeFileSync(path.normalize(`${__dirname}/db/${USERS[user]}.json`), JSON.stringify(content), {
+		encoding: 'utf8',
+	});
 }
 
 module.exports = {

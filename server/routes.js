@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const { DEBUG, USERS, debug, isUserMissing, getDB, writeDB } = require('./utils.js');
+const { debug, isUserMissing, getDB, writeDB } = require('./utils.js');
 
 /**
  * Check user exist
