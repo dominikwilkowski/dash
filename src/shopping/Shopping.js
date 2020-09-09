@@ -5,6 +5,8 @@ import { jsx } from '@emotion/core';
 
 import { rotation } from '../LoadingBtn';
 import { makeRestCall } from '../utils';
+import { Wrapper } from '../Wrapper';
+import { Trash } from '../trash';
 import { Form } from './Form';
 import { List } from './List';
 
@@ -49,21 +51,8 @@ export function Shopping() {
 	};
 
 	return (
-		<div
-			css={{
-				maxWidth: '60rem',
-				margin: '0 auto',
-				padding: '2rem 4vw',
-				background: '#fff',
-				boxShadow: 'rgba(0, 0, 0, 0.3) 0 0 30px',
-				borderTop: '3px solid #000',
-				borderBottom: '3px solid #000',
-				'@media (min-width: 60rem)': {
-					borderRight: '3px solid #000',
-					borderLeft: '3px solid #000',
-				},
-			}}
-		>
+		<Wrapper>
+			<Trash />
 			<h1
 				css={{
 					fontFamily:
@@ -93,6 +82,6 @@ export function Shopping() {
 					}}
 				/>
 			)}
-		</div>
+		</Wrapper>
 	);
 }
