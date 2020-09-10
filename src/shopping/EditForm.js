@@ -5,7 +5,7 @@ import { jsx } from '@emotion/core';
 
 import { LoadingBtn } from '../LoadingBtn';
 
-export function EditForm({ text: defaultText, id, handleChange, ...rest }) {
+export function EditForm({ text: defaultText, id, handleChange, ...props }) {
 	const [loading, setLoading] = useState(false);
 	const [editing, setEditing] = useState(false);
 	const [text, setText] = useState(defaultText);
@@ -31,6 +31,7 @@ export function EditForm({ text: defaultText, id, handleChange, ...rest }) {
 						margin: 0,
 						zIndex: 2,
 					}}
+					{...props}
 				>
 					<input
 						type="text"

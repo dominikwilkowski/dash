@@ -8,7 +8,7 @@ export const rotation = keyframes({
 	},
 });
 
-export function LoadingBtn({ children, loading, ...rest }) {
+export function LoadingBtn({ children, loading, ...props }) {
 	return (
 		<button
 			type="submit"
@@ -39,7 +39,7 @@ export function LoadingBtn({ children, loading, ...rest }) {
 					animation: `${rotation} 0.6s linear infinite`,
 				},
 			}}
-			{...rest}
+			{...props}
 		>
 			{children}
 		</button>

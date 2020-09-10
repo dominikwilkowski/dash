@@ -5,7 +5,7 @@ import { jsx } from '@emotion/core';
 
 import { rotation } from '../LoadingBtn';
 
-export function AsyncButton({ children, onClick, noLoadingReset, ...rest }) {
+export function AsyncButton({ children, onClick, noLoadingReset, ...props }) {
 	const [loading, setLoading] = useState(false);
 
 	const handleOnClick = async () => {
@@ -47,6 +47,7 @@ export function AsyncButton({ children, onClick, noLoadingReset, ...rest }) {
 					animation: `${rotation} 0.6s linear infinite`,
 				},
 			}}
+			{...props}
 		>
 			<span css={{ opacity: loading ? 0 : 1 }}>{children}</span>
 		</button>
