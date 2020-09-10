@@ -15,7 +15,7 @@ export function Trash() {
 		const yellowStart = parseISO(data.yellow);
 
 		if (differenceInWeeks(new Date(), yellowStart) % 2 === 1) {
-			setColor('yellow');
+			setColor('#ffdf00');
 		} else {
 			setColor('SkyBlue');
 		}
