@@ -10,49 +10,50 @@ import { Trash } from '../trash';
 import { Form } from './Form';
 import { List } from './List';
 
-export function Shopping() {
+export function Shopping({ route = 'shopping', toggle = true, trash = true, sort = true }) {
 	const [items, setItems] = useState([]);
-
-	const syncItems = async () => {
-		const data = await makeRestCall('/shopping');
-		setItems(data);
-	};
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
+		const syncItems = async () => {
+			const data = await makeRestCall(`/${route}`);
+			setItems(data);
+			setLoading(false);
+		};
 		syncItems();
 		window.addEventListener('focus', syncItems, false);
 
 		return () => window.removeEventListener('focus', syncItems, false);
-	}, []);
+	}, [route]);
 
 	const addItem = async (event, text, setInput) => {
 		event.preventDefault();
 
 		if (text) {
-			const data = await makeRestCall('/addshopping', { text });
-			setItems(data.shopping);
+			const data = await makeRestCall(`/add${route}`, { text });
+			setItems(data[route]);
 			setInput('');
 		}
 	};
 
 	const toggleItem = async (id) => {
-		const data = await makeRestCall('/toggleshopping', { id });
-		setItems(data.shopping);
+		const data = await makeRestCall(`/toggle${route}`, { id });
+		setItems(data[route]);
 	};
 
 	const editItem = async (id, text) => {
-		const data = await makeRestCall('/editshopping', { id, text });
-		setItems(data.shopping);
+		const data = await makeRestCall(`/edit${route}`, { id, text });
+		setItems(data[route]);
 	};
 
 	const removeItem = async (id) => {
-		const data = await makeRestCall('/deleteshopping', { id });
-		setItems(data.shopping);
+		const data = await makeRestCall(`/delete${route}`, { id });
+		setItems(data[route]);
 	};
 
 	return (
 		<Wrapper>
-			<Trash />
+			{trash && <Trash />}
 			<h1
 				css={{
 					fontFamily:
@@ -64,12 +65,10 @@ export function Shopping() {
 					fontWeight: 700,
 				}}
 			>
-				Shopping
+				{route.charAt(0).toUpperCase() + route.slice(1)}
 			</h1>
 			<Form addItem={addItem} />
-			{items.length ? (
-				<List items={items} removeItem={removeItem} toggleItem={toggleItem} editItem={editItem} />
-			) : (
+			{loading ? (
 				<div
 					css={{
 						width: '2rem',
@@ -80,6 +79,15 @@ export function Shopping() {
 						borderRadius: '100%',
 						animation: `${rotation} 0.6s linear infinite`,
 					}}
+				/>
+			) : (
+				<List
+					items={items}
+					removeItem={removeItem}
+					toggle={toggle}
+					toggleItem={toggleItem}
+					editItem={editItem}
+					sort={sort}
 				/>
 			)}
 		</Wrapper>

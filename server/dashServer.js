@@ -1,22 +1,22 @@
-require('dotenv').config();
-const cfonts = require('cfonts');
-const restify = require('restify');
 const corsMiddleware = require('restify-cors-middleware');
+const restify = require('restify');
+const cfonts = require('cfonts');
+require('dotenv').config();
 
+const { getGoals, addGoals, editGoals, deleteGoals } = require('./routes/goals.js');
+const { getNavigation } = require('./routes/navigation.js');
+const { getVersion } = require('./routes/version.js');
+const { getDb, writeDb } = require('./routes/db.js');
+const { checkUser } = require('./routes/user.js');
+const { getTrash } = require('./routes/trash.js');
 const { DEBUG, debug } = require('./utils.js');
 const {
-	checkUser,
-	getNavigation,
 	getShopping,
 	addShopping,
 	editShopping,
 	toggleDoneShopping,
 	deleteShopping,
-	getTrash,
-	getAll,
-	writeAll,
-	getVersion,
-} = require('./routes.js');
+} = require('./routes/shopping.js');
 
 // HEADERS FOR LOG
 console.log('\n\n');
@@ -66,8 +66,12 @@ server.post('/dash/editshopping', editShopping);
 server.post('/dash/toggleshopping', toggleDoneShopping);
 server.post('/dash/deleteshopping', deleteShopping);
 server.post('/dash/gettrash', getTrash);
-server.post('/dash/getall', getAll);
-server.post('/dash/writeall', writeAll);
+server.post('/dash/getdb', getDb);
+server.post('/dash/writedb', writeDb);
+server.post('/dash/goals', getGoals);
+server.post('/dash/addgoals', addGoals);
+server.post('/dash/editgoals', editGoals);
+server.post('/dash/deletegoals', deleteGoals);
 server.get('/dash/version', getVersion);
 
 if (process.argv.includes('serve')) {

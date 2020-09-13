@@ -5,7 +5,7 @@ import { jsx } from '@emotion/core';
 import { EditForm } from './EditForm';
 import { AsyncButton } from './AsyncButton';
 
-export function List({ items, removeItem, toggleItem, editItem }) {
+export function List({ items, removeItem, toggle, toggleItem, editItem, sort }) {
 	const comparator = (a, b) => {
 		if (a.isDone !== b.isDone) {
 			return a.isDone ? 1 : -1;
@@ -13,6 +13,7 @@ export function List({ items, removeItem, toggleItem, editItem }) {
 
 		return b.id - a.id;
 	};
+	const sortedItems = sort ? items.sort(comparator) : items;
 
 	return (
 		<ul
@@ -22,7 +23,7 @@ export function List({ items, removeItem, toggleItem, editItem }) {
 				margin: 0,
 			}}
 		>
-			{items.sort(comparator).map(({ id, text, isDone }) => (
+			{sortedItems.map(({ id, text, isDone }) => (
 				<li
 					key={id}
 					css={{
@@ -32,46 +33,48 @@ export function List({ items, removeItem, toggleItem, editItem }) {
 						marginBottom: '0.5rem',
 					}}
 				>
-					<AsyncButton onClick={() => toggleItem(id)}>
-						<span
-							css={{
-								position: 'relative',
-								display: 'inline-block',
-								width: '1.5rem',
-								height: '1.5rem',
-								border: '3px solid #000',
-								textIndent: '-99999rem',
-								color: 'transparent',
-								borderRadius: '3px',
-								':before': {
-									content: '""',
-									display: isDone ? 'block' : 'none',
-									position: 'absolute',
-									top: '0',
-									left: '4px',
-									width: '1.1rem',
-									height: '0.55rem',
-									borderBottom: '3px solid #000',
-									borderLeft: '3px solid #000',
-									transform: 'rotate(-45deg)',
-									zIndex: 2,
-								},
-								':after': {
-									content: '""',
-									display: isDone ? 'block' : 'none',
-									position: 'absolute',
-									top: '-3px',
-									right: '-3px',
-									width: '0.5rem',
-									height: '0.8rem',
-									background: '#fff',
-									zIndex: 1,
-								},
-							}}
-						>
-							Toggle this item
-						</span>
-					</AsyncButton>
+					{toggle && (
+						<AsyncButton onClick={() => toggleItem(id)}>
+							<span
+								css={{
+									position: 'relative',
+									display: 'inline-block',
+									width: '1.5rem',
+									height: '1.5rem',
+									border: '3px solid #000',
+									textIndent: '-99999rem',
+									color: 'transparent',
+									borderRadius: '3px',
+									':before': {
+										content: '""',
+										display: isDone ? 'block' : 'none',
+										position: 'absolute',
+										top: '0',
+										left: '4px',
+										width: '1.1rem',
+										height: '0.55rem',
+										borderBottom: '3px solid #000',
+										borderLeft: '3px solid #000',
+										transform: 'rotate(-45deg)',
+										zIndex: 2,
+									},
+									':after': {
+										content: '""',
+										display: isDone ? 'block' : 'none',
+										position: 'absolute',
+										top: '-3px',
+										right: '-3px',
+										width: '0.5rem',
+										height: '0.8rem',
+										background: '#fff',
+										zIndex: 1,
+									},
+								}}
+							>
+								Toggle this item
+							</span>
+						</AsyncButton>
+					)}
 					<EditForm handleChange={editItem} text={text} id={id} />
 					<AsyncButton onClick={() => removeItem(id)} noLoadingReset>
 						<span role="img" aria-label="Delete this item">
