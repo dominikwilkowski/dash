@@ -8,7 +8,9 @@ import parseISO from 'date-fns/parseISO';
 import { makeRestCall } from '../utils';
 
 export function Trash() {
-	const [color, setColor] = useState('lightseagreen');
+	const [color, setColor] = useState(
+		'#50C9C3 -webkit-radial-gradient(left bottom, #5f2c82, #49a09d) repeat fixed 0% 0%'
+	);
 
 	const syncTrash = async () => {
 		const data = await makeRestCall('/gettrash');
