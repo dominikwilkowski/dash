@@ -176,6 +176,7 @@ export function App() {
 						<Router>
 							<nav
 								css={{
+									position: 'relative',
 									display: 'block',
 									borderBottom: '3px solid #000',
 									margin: '0 0 3rem 0',
@@ -187,8 +188,10 @@ export function App() {
 									type="button"
 									onClick={handleLogout}
 									css={{
+										position: 'absolute',
+										top: 0,
+										right: 0,
 										display: 'inline-block',
-										float: 'right',
 										padding: '1rem',
 										background: 'transparent',
 										border: 'none',

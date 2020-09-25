@@ -137,148 +137,178 @@ export function Mort() {
 			<h2>
 				{format(new Date(year, month, days), 'MMM')} {year}
 			</h2>
-			{loading ? (
-				<div
-					css={{
-						width: '2rem',
-						height: '2rem',
-						margin: '2rem auto',
-						border: '3px solid #aaa',
-						borderTopColor: '#000',
+			<div
+				css={{
+					position: 'relative',
+					display: 'grid',
+					gridTemplateColumns: 'repeat(7, 1fr)',
+					borderTop: '1px solid #888',
+					borderBottom: '1px solid #888',
+					background: '#888',
+					margin: '0 -4vw',
+					gap: '1px',
+					'@media (min-width: 500px)': {
+						margin: '0',
+						border: '1px solid #888',
+					},
+					':before': {
+						content: '""',
+						display: loading ? 'block' : 'none',
+						position: 'absolute',
+						top: 0,
+						right: 0,
+						bottom: 0,
+						left: 0,
+						background: 'rgba(0, 0, 0, 0.4)',
+						zIndex: 2,
+					},
+					':after': {
+						content: '""',
+						display: loading ? 'block' : 'none',
+						position: 'absolute',
+						top: '50%',
+						left: '50%',
+						width: '4rem',
+						height: '4rem',
+						margin: '-2rem 0 0 -2rem',
+						border: '6px solid #fff',
+						borderTopColor: '#555',
 						borderRadius: '100%',
 						animation: `${rotation} 0.6s linear infinite`,
-					}}
-				/>
-			) : (
-				<div
-					css={{
-						display: 'grid',
-						gridTemplateColumns: 'repeat(7, 1fr)',
-						borderTop: '1px solid #888',
-						borderBottom: '1px solid #888',
-						background: '#888',
-						margin: '0 -4vw',
-						gap: '1px',
-						'@media (min-width: 500px)': {
-							margin: '0',
+						zIndex: 3,
+					},
+					'@supports not (display: grid)': {
+						overflow: 'hidden',
+						display: 'block',
+						'& > div': {
+							float: 'left',
+							width: '14.2857142857%',
+							height: '86px',
 							border: '1px solid #888',
 						},
-					}}
-				>
-					{DAY_NAMES.map((day) => (
-						<div
-							key={day}
-							css={{
-								background: '#fff',
-								padding: '0.5rem',
-								textAlign: 'center',
-							}}
-						>
-							{day}
-						</div>
+						'& .header': {
+							height: '35px',
+						},
+						'& div:nth-child(7n + 1)': {
+							clear: 'left',
+						},
+					},
+				}}
+			>
+				{DAY_NAMES.map((day) => (
+					<div
+						className="header"
+						key={day}
+						css={{
+							background: '#fff',
+							padding: '0.5rem',
+							textAlign: 'center',
+						}}
+					>
+						{day}
+					</div>
+				))}
+				{Array(DAY_NAMES.indexOf(format(new Date(year, month, 1), 'EEE')))
+					.fill()
+					.map((_, i) => (
+						<Empty key={`non-${i}`} />
 					))}
-					{Array(DAY_NAMES.indexOf(format(new Date(year, month, 1), 'EEE')))
-						.fill()
-						.map((_, i) => (
-							<Empty key={`non-${i}`} />
-						))}
-					{Array(days)
-						.fill()
-						.map((_, day) => {
-							const thisDay = new Date(year, month, day + 1);
-							const isoDay = format(thisDay, 'yyyy-MM-dd');
-							const isFuture = isAfter(new Date(year, month, day), new Date());
+				{Array(days)
+					.fill()
+					.map((_, day) => {
+						const thisDay = new Date(year, month, day + 1);
+						const isoDay = format(thisDay, 'yyyy-MM-dd');
+						const isFuture = isAfter(new Date(year, month, day), new Date());
 
-							let background = db[isoDay]
-								? {
-										background: 'linear-gradient(to right, #ff416c, #ff4b2b)',
-										color: '#fff',
-								  }
-								: { background: '#11FFBD' };
-							if (isFuture) {
-								background = { background: '#fff' };
-							}
+						let background = db[isoDay]
+							? {
+									background: 'linear-gradient(to right, #ff416c, #ff4b2b)',
+									color: '#fff',
+							  }
+							: { background: '#11FFBD' };
+						if (isFuture) {
+							background = { background: '#fff' };
+						}
 
-							return (
-								<div
-									key={day}
+						return (
+							<div
+								key={day}
+								css={{
+									position: 'relative',
+									padding: '1.75rem 0.5rem 0.5rem 0.5rem',
+									...background,
+								}}
+							>
+								<span
 									css={{
-										position: 'relative',
-										padding: '1.75rem 0.5rem 0.5rem 0.5rem',
-										...background,
+										position: 'absolute',
+										fontSize: '0.75rem',
+										top: 0,
+										right: 0,
+										margin: '0.5rem 0.5rem 0 0',
 									}}
 								>
-									<span
-										css={{
-											position: 'absolute',
-											fontSize: '0.75rem',
-											top: 0,
-											right: 0,
-											margin: '0.5rem 0.5rem 0 0',
-										}}
-									>
-										{format(thisDay, 'd')}
-									</span>
-									<div
-										css={{
-											position: 'absolute',
-											left: 0,
-											right: '1.6rem',
-											top: 0,
-											display: 'grid',
-											gridTemplateColumns: 'repeat(5, 1fr)',
-											padding: '0.25rem',
-											justifyItems: 'center',
-										}}
-									>
-										{db[isoDay] &&
-											Array(db[isoDay])
-												.fill()
-												.map((_, i) => (
-													<span
-														key={`dot-${i}`}
-														css={{
-															display: 'inline-block',
-															background: '#fff',
-															borderRadius: '100%',
-															width: '0.5rem',
-															height: '0.5rem',
-														}}
-													/>
-												))}
-									</div>
-
-									<Button
-										onClick={() => addDate(isoDay)}
-										disabled={isFuture}
-										css={{
-											display: 'block',
-											width: '100%',
-										}}
-									>
-										+
-									</Button>
-									<Button
-										onClick={() => deleteDate(isoDay)}
-										disabled={isFuture}
-										css={{
-											display: 'block',
-											width: '100%',
-											marginTop: '0.5rem',
-										}}
-									>
-										-
-									</Button>
+									{format(thisDay, 'd')}
+								</span>
+								<div
+									css={{
+										position: 'absolute',
+										left: 0,
+										right: '1.6rem',
+										top: 0,
+										display: 'grid',
+										gridTemplateColumns: 'repeat(5, 1fr)',
+										padding: '0.25rem',
+										justifyItems: 'center',
+									}}
+								>
+									{db[isoDay] &&
+										Array(db[isoDay])
+											.fill()
+											.map((_, i) => (
+												<span
+													key={`dot-${i}`}
+													css={{
+														display: 'inline-block',
+														background: '#fff',
+														borderRadius: '100%',
+														width: '0.5rem',
+														height: '0.5rem',
+													}}
+												/>
+											))}
 								</div>
-							);
-						})}
-					{Array(6 - DAY_NAMES.indexOf(format(new Date(year, month, days), 'EEE')))
-						.fill()
-						.map((_, i) => (
-							<Empty key={`non2-${i}`} />
-						))}
-				</div>
-			)}
+
+								<Button
+									onClick={() => addDate(isoDay)}
+									disabled={isFuture}
+									css={{
+										display: 'block',
+										width: '100%',
+									}}
+								>
+									+
+								</Button>
+								<Button
+									onClick={() => deleteDate(isoDay)}
+									disabled={isFuture}
+									css={{
+										display: 'block',
+										width: '100%',
+										marginTop: '0.5rem',
+									}}
+								>
+									-
+								</Button>
+							</div>
+						);
+					})}
+				{Array(6 - DAY_NAMES.indexOf(format(new Date(year, month, days), 'EEE')))
+					.fill()
+					.map((_, i) => (
+						<Empty key={`non2-${i}`} />
+					))}
+			</div>
 		</Wrapper>
 	);
 }
