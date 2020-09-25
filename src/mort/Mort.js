@@ -218,7 +218,7 @@ export function Mort() {
 					.map((_, day) => {
 						const thisDay = new Date(year, month, day + 1);
 						const isoDay = format(thisDay, 'yyyy-MM-dd');
-						const isFuture = isAfter(new Date(year, month, day), new Date());
+						const isFuture = isAfter(thisDay, new Date());
 
 						let background = db[isoDay]
 							? {
