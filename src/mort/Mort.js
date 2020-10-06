@@ -151,7 +151,7 @@ export function Mort() {
 					}}
 				>
 					<strong css={{ display: 'block' }}>Longest streak</strong>
-					{longestStreak}
+					{longestStreak} days
 				</div>
 				<div
 					css={{
@@ -161,7 +161,7 @@ export function Mort() {
 					}}
 				>
 					<strong css={{ display: 'block' }}>Current streak</strong>
-					{currentStreak}
+					{currentStreak} days
 				</div>
 			</div>
 			<div
