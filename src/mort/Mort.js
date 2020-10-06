@@ -1,8 +1,10 @@
 /** @jsx jsx */
 
+import differenceInCalendarDays from 'date-fns/differenceInCalendarDays';
 import getDaysInMonth from 'date-fns/getDaysInMonth';
 import { useState, useEffect } from 'react';
 import getMonth from 'date-fns/getMonth';
+import parseISO from 'date-fns/parseISO';
 import getYear from 'date-fns/getYear';
 import isAfter from 'date-fns/isAfter';
 import format from 'date-fns/format';
@@ -34,7 +36,6 @@ function Button({ children, size = 'sm', ...props }) {
 
 	return (
 		<button
-			{...props}
 			css={{
 				background: '#fff',
 				border: '1px solid #000',
@@ -43,10 +44,12 @@ function Button({ children, size = 'sm', ...props }) {
 				padding: '0.25rem',
 				lineHeight: 1,
 				':disabled': {
-					opacity: 0.2,
+					opacity: 0,
+					cursor: 'default',
 				},
 				...styleMap[size],
 			}}
+			{...props}
 		>
 			{children}
 		</button>
@@ -60,11 +63,29 @@ export function Mort() {
 	const [days, setDays] = useState(getDaysInMonth(new Date(year, month)));
 	const [loading, setLoading] = useState(true);
 	const [db, setDb] = useState({});
+	const [longestStreak, setLongestStreak] = useState(0);
+	const [currentStreak, setCurrentStreak] = useState(0);
+
+	const calcStreak = (db) => {
+		let longestStreak = 0;
+		const dates = Object.keys(db);
+		dates.forEach((thisDate, key) => {
+			if (key > 0) {
+				const streak = differenceInCalendarDays(parseISO(thisDate), parseISO(dates[key - 1]));
+				if (streak > longestStreak) {
+					longestStreak = streak;
+				}
+			}
+		});
+		setLongestStreak(longestStreak);
+		setCurrentStreak(differenceInCalendarDays(new Date(), parseISO(dates[dates.length - 1])));
+	};
 
 	useEffect(() => {
 		const getDB = async () => {
 			const data = await makeRestCall('/mort');
 			setDb(data);
+			calcStreak(data);
 			setLoading(false);
 		};
 		getDB();
@@ -117,6 +138,32 @@ export function Mort() {
 			>
 				Mort
 			</h1>
+			<div
+				css={{
+					overflow: 'hidden',
+					margin: '1rem 0',
+				}}
+			>
+				<div
+					css={{
+						width: '50%',
+						float: 'left',
+					}}
+				>
+					<strong css={{ display: 'block' }}>Longest streak</strong>
+					{longestStreak}
+				</div>
+				<div
+					css={{
+						width: '50%',
+						float: 'left',
+						textAlign: 'right',
+					}}
+				>
+					<strong css={{ display: 'block' }}>Current streak</strong>
+					{currentStreak}
+				</div>
+			</div>
 			<div
 				css={{
 					display: 'grid',
