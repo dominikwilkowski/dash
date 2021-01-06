@@ -1,14 +1,14 @@
 const { debug, isUserMissing, getDB, writeDB } = require('../utils.js');
 
 /**
- * Get mort
+ * Get energy
  *
  * @param  {object}   req  - The request object from express
  * @param  {object}   res  - The result object from express
  * @param  {function} next - The next function from express
  */
-function getMort(req, res, next) {
-	debug('Looking up mort', 'interaction', req);
+function getEnergy(req, res, next) {
+	debug('Looking up energy', 'interaction', req);
 
 	const { user } = req.body;
 	const userMissing = isUserMissing(user);
@@ -16,19 +16,19 @@ function getMort(req, res, next) {
 		return next(userMissing);
 	}
 
-	res.send(getDB(user).mort);
+	res.send(getDB(user).energy);
 	return next();
 }
 
 /**
- * Add to mort
+ * Add to energy
  *
  * @param  {object}   req  - The request object from express
  * @param  {object}   res  - The result object from express
  * @param  {function} next - The next function from express
  */
-function addMort(req, res, next) {
-	debug('Add to mort', 'interaction', req);
+function addEnergy(req, res, next) {
+	debug('Add to energy', 'interaction', req);
 
 	const { user, date } = req.body;
 	const userMissing = isUserMissing(user);
@@ -37,44 +37,42 @@ function addMort(req, res, next) {
 	}
 
 	const db = getDB(user);
-	db.mort[date] = db.mort[date] ? db.mort[date] + 1 : 1;
+	if (!db.energy.includes(date)) {
+		db.energy.push(date);
+	}
 
 	writeDB(user, db);
 
-	res.send({ date, mort: db.mort });
+	res.send({ date, energy: db.energy });
 	return next();
 }
 
 /**
- * Delete an item from mort
+ * Delete an item from energy
  *
  * @param  {object}   req  - The request object from express
  * @param  {object}   res  - The result object from express
  * @param  {function} next - The next function from express
  */
-function deleteMort(req, res, next) {
-	debug('Delete mort item', 'interaction', req);
+function deleteEnergy(req, res, next) {
+	debug('Delete energy item', 'interaction', req);
 
-	const { user, date } = req.body;
+	const { user, date: userDate } = req.body;
 	const userMissing = isUserMissing(user);
 	if (userMissing) {
 		return next(userMissing);
 	}
 
 	const db = getDB(user);
-	if (db.mort[date] > 1) {
-		db.mort[date]--;
-	} else {
-		delete db.mort[date];
-	}
+	db.energy = db.energy.filter((date) => date !== userDate);
 	writeDB(user, db);
 
-	res.send({ date, mort: db.mort });
+	res.send({ userDate, energy: db.energy });
 	return next();
 }
 
 module.exports = {
-	getMort,
-	addMort,
-	deleteMort,
+	getEnergy,
+	addEnergy,
+	deleteEnergy,
 };

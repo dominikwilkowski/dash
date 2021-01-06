@@ -4,6 +4,7 @@ const cfonts = require('cfonts');
 require('dotenv').config();
 
 const { getGoals, addGoals, editGoals, deleteGoals } = require('./routes/goals.js');
+const { getEnergy, addEnergy, deleteEnergy } = require('./routes/energy.js');
 const { getMort, addMort, deleteMort } = require('./routes/mort.js');
 const { getNavigation } = require('./routes/navigation.js');
 const { getVersion } = require('./routes/version.js');
@@ -76,6 +77,9 @@ server.post('/dash/deletegoals', deleteGoals);
 server.post('/dash/mort', getMort);
 server.post('/dash/addmort', addMort);
 server.post('/dash/deletemort', deleteMort);
+server.post('/dash/energy', getEnergy);
+server.post('/dash/addenergy', addEnergy);
+server.post('/dash/deleteenergy', deleteEnergy);
 server.get('/dash/version', getVersion);
 
 if (process.argv.includes('serve')) {
