@@ -1,10 +1,8 @@
 /** @jsx jsx */
 
-import differenceInCalendarDays from 'date-fns/differenceInCalendarDays';
 import getDaysInMonth from 'date-fns/getDaysInMonth';
 import { useState, useEffect } from 'react';
 import getMonth from 'date-fns/getMonth';
-import parseISO from 'date-fns/parseISO';
 import getYear from 'date-fns/getYear';
 import isAfter from 'date-fns/isAfter';
 import format from 'date-fns/format';
