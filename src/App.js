@@ -8,6 +8,7 @@ import { Navigation } from './Navigation';
 import { LoadingBtn } from './LoadingBtn';
 import { makeRestCall } from './utils';
 import { Shopping } from './shopping';
+import { Energy } from './energy';
 import { Goals } from './goals';
 import { Mort } from './mort';
 import { Db } from './db';
@@ -35,6 +36,7 @@ export function App() {
 
 	const supportedComponents = {
 		Shopping: <Shopping />,
+		Energy: <Energy />,
 		Goals: <Goals />,
 		Mort: <Mort />,
 		Db: <Db />,
