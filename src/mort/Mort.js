@@ -63,20 +63,24 @@ export function Mort() {
 	const [days, setDays] = useState(getDaysInMonth(new Date(year, month)));
 	const [loading, setLoading] = useState(true);
 	const [db, setDb] = useState({});
+	const [streaks, setStreaks] = useState([]);
 	const [longestStreak, setLongestStreak] = useState(0);
 	const [currentStreak, setCurrentStreak] = useState(0);
 
 	const calcStreak = (db) => {
+		let streaks = [];
 		let longestStreak = 0;
 		const dates = Object.keys(db);
 		dates.forEach((thisDate, key) => {
 			if (key > 0) {
 				const streak = differenceInCalendarDays(parseISO(thisDate), parseISO(dates[key - 1]));
+				streaks.push({ streak, from: dates[key - 1], to: thisDate });
 				if (streak > longestStreak) {
 					longestStreak = streak;
 				}
 			}
 		});
+		setStreaks(streaks);
 		setLongestStreak(longestStreak);
 		setCurrentStreak(differenceInCalendarDays(new Date(), parseISO(dates[dates.length - 1])));
 	};
@@ -109,12 +113,12 @@ export function Mort() {
 	};
 
 	const changeMonth = (newMonth, newYear = year) => {
-		if (newMonth < 1) {
-			newMonth = 12;
+		if (newMonth < 0) {
+			newMonth = 11;
 			newYear--;
 		}
-		if (newMonth > 12) {
-			newMonth = 1;
+		if (newMonth > 11) {
+			newMonth = 0;
 			newYear++;
 		}
 
@@ -356,6 +360,22 @@ export function Mort() {
 						<Empty key={`non2-${i}`} />
 					))}
 			</div>
+			<strong
+				title={`A total of ${streaks.length} streaks`}
+				css={{
+					marginTop: '2rem',
+					display: 'block',
+				}}
+			>
+				All streaks
+			</strong>
+			<ul>
+				{streaks.map(({ streak, from, to }, i) => (
+					<li key={i} title={`${from} - ${to}`}>
+						{streak} days
+					</li>
+				))}
+			</ul>
 		</Wrapper>
 	);
 }
