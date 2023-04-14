@@ -34,4 +34,4 @@ package-lock.json
 .idea
 
 # db
-db/
+server/db/

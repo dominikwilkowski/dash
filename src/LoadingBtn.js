@@ -23,7 +23,8 @@ export function LoadingBtn({ children, loading, ...props }) {
 				cursor: 'pointer',
 				lineHeight: 1,
 				margin: 0,
-				color: loading ? 'transparent' : null,
+				color: loading ? 'transparent' : '#000',
+				fontWeight: 400,
 				':after': {
 					content: '""',
 					display: loading ? 'block' : 'none',

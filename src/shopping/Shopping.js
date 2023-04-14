@@ -10,7 +10,7 @@ import { Trash } from '../trash';
 import { Form } from './Form';
 import { List } from './List';
 
-export function Shopping({ route = 'shopping', toggle = true, trash = true, sort = true }) {
+export function Shopping({ route = 'shopping', toggle = true, trash = false, sort = true }) {
 	const [items, setItems] = useState([]);
 	const [loading, setLoading] = useState(true);
 

@@ -15,7 +15,7 @@ ReactDOM.render(
 					margin: 0,
 					padding: 0,
 					background:
-						'#50C9C3 -webkit-radial-gradient(left bottom, #5f2c82, #49a09d) repeat fixed 0% 0%',
+						'#fff -webkit-radial-gradient(left bottom, rgba(95, 44, 130, 0.7), rgba(73, 160, 157, 0.7)) repeat fixed 0% 0%',
 				},
 				a: {
 					color: '#000',
