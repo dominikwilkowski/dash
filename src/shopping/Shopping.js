@@ -23,7 +23,6 @@ export function Shopping({
 
 	const syncItems = useCallback(async () => {
 		const data = await makeRestCall(`/${route}`);
-		console.log(data);
 		setItems(data);
 		setLoading(false);
 	}, [setItems, setLoading, route]);
