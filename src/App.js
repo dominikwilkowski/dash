@@ -198,7 +198,7 @@ export function App() {
 										background: 'transparent',
 										border: 'none',
 										apperance: 'none',
-										fontSize: '1rem',
+										fontSize: '0.4rem',
 										cursor: 'pointer',
 									}}
 								>

@@ -1,9 +1,9 @@
 /** @jsx jsx */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { jsx } from '@emotion/core';
 
-import { rotation } from '../LoadingBtn';
+import { LoadingBtn, rotation } from '../LoadingBtn';
 import { makeRestCall } from '../utils';
 import { Wrapper } from '../Wrapper';
 import { Trash } from '../trash';
@@ -13,18 +13,27 @@ import { List } from './List';
 export function Shopping({ route = 'shopping', toggle = true, trash = false, sort = true }) {
 	const [items, setItems] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const [reload, setReload] = useState(false);
+
+	const syncItems = useCallback(async () => {
+		const data = await makeRestCall(`/${route}`);
+		console.log(data);
+		setItems(data);
+		setLoading(false);
+	}, [setItems, setLoading, route]);
 
 	useEffect(() => {
-		const syncItems = async () => {
-			const data = await makeRestCall(`/${route}`);
-			setItems(data);
-			setLoading(false);
-		};
 		syncItems();
 		window.addEventListener('focus', syncItems, false);
 
 		return () => window.removeEventListener('focus', syncItems, false);
-	}, [route]);
+	}, [route, syncItems]);
+
+	const reloadState = async () => {
+		setReload(true);
+		await syncItems();
+		setReload(false);
+	};
 
 	const addItem = async (event, text, setInput) => {
 		event.preventDefault();
@@ -54,19 +63,40 @@ export function Shopping({ route = 'shopping', toggle = true, trash = false, sor
 	return (
 		<Wrapper>
 			{trash && <Trash />}
-			<h1
+			<div
 				css={{
-					fontFamily:
-						'"Playfair Display", "PT Serif", Cambria, "Hoefler Text", Utopia, "Liberation Serif", "Nimbus Roman No9 L Regular", Times, "Times New Roman", serif',
-					fontStyle: 'italic',
-					fontSize: '3.5rem',
-					margin: '0 0 1rem 0',
-					textAlign: 'center',
-					fontWeight: 700,
+					position: 'relative',
 				}}
 			>
-				{route.charAt(0).toUpperCase() + route.slice(1)}
-			</h1>
+				<h1
+					css={{
+						fontFamily:
+							'"Playfair Display", "PT Serif", Cambria, "Hoefler Text", Utopia, "Liberation Serif", "Nimbus Roman No9 L Regular", Times, "Times New Roman", serif',
+						fontStyle: 'italic',
+						fontSize: '3.5rem',
+						margin: '0 0 1rem 0',
+						textAlign: 'center',
+						fontWeight: 700,
+					}}
+				>
+					{route.charAt(0).toUpperCase() + route.slice(1)}
+				</h1>
+				<LoadingBtn
+					loading={reload}
+					css={{
+						padding: '0.3rem',
+						borderLeft: '1px solid #000',
+						position: 'absolute',
+						top: 0,
+						right: 0,
+						borderRadius: '5px',
+						fontSize: '0.7rem',
+					}}
+					onClick={reloadState}
+				>
+					refresh
+				</LoadingBtn>
+			</div>
 			<Form addItem={addItem} />
 			{loading ? (
 				<div

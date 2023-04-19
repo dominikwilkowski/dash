@@ -25,7 +25,7 @@ export function List({ items, removeItem, toggle, toggleItem, editItem, sort }) 
 		>
 			{sortedItems.map(({ id, text, isDone }) => (
 				<li
-					key={id}
+					key={id + text}
 					css={{
 						textDecoration: isDone ? 'line-through' : 'none',
 						display: 'flex',
