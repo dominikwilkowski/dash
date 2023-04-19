@@ -91,6 +91,12 @@ export function Shopping({ route = 'shopping', toggle = true, trash = false, sor
 						right: 0,
 						borderRadius: '5px',
 						fontSize: '0.7rem',
+						':after': {
+							top: '4px',
+							marginLeft: '-0.45rem',
+							width: '.9rem',
+							height: '.9rem',
+						},
 					}}
 					onClick={reloadState}
 				>
