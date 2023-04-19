@@ -36,6 +36,7 @@ export function App() {
 
 	const supportedComponents = {
 		Shopping: <Shopping />,
+		'Shopping Other': <Shopping name="Shopping Other" />,
 		Energy: <Energy />,
 		Goals: <Goals />,
 		Mort: <Mort />,

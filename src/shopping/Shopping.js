@@ -10,7 +10,13 @@ import { Trash } from '../trash';
 import { Form } from './Form';
 import { List } from './List';
 
-export function Shopping({ route = 'shopping', toggle = true, trash = false, sort = true }) {
+export function Shopping({
+	route = 'shopping',
+	toggle = true,
+	trash = false,
+	sort = true,
+	name = 'Shopping',
+}) {
 	const [items, setItems] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [reload, setReload] = useState(false);
@@ -79,7 +85,7 @@ export function Shopping({ route = 'shopping', toggle = true, trash = false, sor
 						fontWeight: 700,
 					}}
 				>
-					{route.charAt(0).toUpperCase() + route.slice(1)}
+					{name}
 				</h1>
 				<LoadingBtn
 					loading={reload}
