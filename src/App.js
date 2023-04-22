@@ -188,24 +188,6 @@ export function App() {
 								}}
 							>
 								<Navigation nav={remoteNav} />
-								<button
-									type="button"
-									onClick={handleLogout}
-									css={{
-										position: 'absolute',
-										top: 0,
-										right: 0,
-										display: 'inline-block',
-										padding: '1rem',
-										background: 'transparent',
-										border: 'none',
-										apperance: 'none',
-										fontSize: '0.4rem',
-										cursor: 'pointer',
-									}}
-								>
-									Logout
-								</button>
 							</nav>
 							<Switch>
 								{remoteNav.map(({ name, url, component }) => (
@@ -223,10 +205,37 @@ export function App() {
 					fontSize: '0.7rem',
 					color: '#fff',
 					padding: '0.5rem',
-					textAlign: 'right',
+					display: 'grid',
+					gridTemplateColumns: '1fr 1fr',
 				}}
 			>
-				v{version}
+				<div
+					css={{
+						padding: '1rem',
+					}}
+				>
+					v{version}
+				</div>
+				<div
+					css={{
+						textAlign: 'right',
+					}}
+				>
+					<button
+						type="button"
+						onClick={handleLogout}
+						css={{
+							padding: '1rem',
+							color: '#fff',
+							background: 'transparent',
+							border: 'none',
+							apperance: 'none',
+							cursor: 'pointer',
+						}}
+					>
+						Logout
+					</button>
+				</div>
 			</div>
 		</main>
 	);

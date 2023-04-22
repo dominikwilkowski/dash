@@ -14,9 +14,9 @@ export function Navigation({ nav }) {
 				css={{
 					display: 'inline-block',
 					listStyle: 'none',
-					padding: '0 5rem 0 0',
+					padding: '0 0 0 0',
 					margin: 0,
-					width: 'calc(100% - 5rem)',
+					width: '100%',
 					overflow: 'auto',
 					whiteSpace: 'nowrap',
 				}}
