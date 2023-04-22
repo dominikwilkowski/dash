@@ -16,6 +16,7 @@ const {
 	getShopping,
 	addShopping,
 	editShopping,
+	orderShopping,
 	toggleDoneShopping,
 	deleteShopping,
 } = require('./routes/shopping.js');
@@ -72,6 +73,9 @@ server.post('/dash/navigation', getNavigation);
 	);
 	server.post(`/dash/editshopping${route}`, (req, res, next) =>
 		editShopping(req, res, next, `shopping${route}`)
+	);
+	server.post(`/dash/ordershopping${route}`, (req, res, next) =>
+		orderShopping(req, res, next, `shopping${route}`)
 	);
 	server.post(`/dash/toggleshopping${route}`, (req, res, next) =>
 		toggleDoneShopping(req, res, next, `shopping${route}`)

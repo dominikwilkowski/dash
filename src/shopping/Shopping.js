@@ -1,6 +1,7 @@
 /** @jsx jsx */
 
 import { useState, useEffect, useCallback } from 'react';
+import { DragDropContext } from 'react-beautiful-dnd';
 import { jsx } from '@emotion/core';
 
 import { LoadingBtn, rotation } from '../LoadingBtn';
@@ -74,6 +75,21 @@ export function Shopping({
 		setItems(data[path]);
 	};
 
+	const onDragEnd = async (result) => {
+		// dropped outside the list
+		if (!result.destination) {
+			return;
+		}
+
+		setLoading(true);
+		const data = await makeRestCall(`/order${path}`, {
+			sourceId: items[result.source.index].id,
+			destinationId: items[result.destination.index].id,
+		});
+		setItems(data[path]);
+		setLoading(false);
+	};
+
 	return (
 		<Wrapper>
 			{trash && <Trash />}
@@ -118,28 +134,52 @@ export function Shopping({
 				</LoadingBtn>
 			</div>
 			<Form addItem={addItem} />
-			{loading ? (
+			<div
+				css={{
+					position: 'relative',
+					paddingBottom: '4rem',
+					background: loading
+						? 'repeating-linear-gradient(45deg,#fff,#fff 10px,#ddd 10px,#ddd 20px);'
+						: 'transparent',
+					transition: 'all ease 0.4s',
+				}}
+			>
+				{loading && (
+					<div
+						css={{
+							position: 'absolute',
+							top: '1rem',
+							left: '50%',
+							marginLeft: '-1rem',
+							width: '2rem',
+							height: '2rem',
+							border: '3px solid #aaa',
+							borderTopColor: '#000',
+							borderRadius: '100%',
+							animation: `${rotation} 0.6s linear infinite`,
+							zIndex: 999,
+						}}
+					/>
+				)}
 				<div
 					css={{
-						width: '2rem',
-						height: '2rem',
-						margin: '2rem auto',
-						border: '3px solid #aaa',
-						borderTopColor: '#000',
-						borderRadius: '100%',
-						animation: `${rotation} 0.6s linear infinite`,
+						filter: loading ? 'blur(3px)' : 'none',
+						transition: 'filter ease 0.4s',
 					}}
-				/>
-			) : (
-				<List
-					items={items}
-					removeItem={removeItem}
-					toggle={toggle}
-					toggleItem={toggleItem}
-					editItem={editItem}
-					sort={sort}
-				/>
-			)}
+				>
+					<DragDropContext onDragEnd={onDragEnd}>
+						<List
+							items={items}
+							removeItem={removeItem}
+							toggle={toggle}
+							toggleItem={toggleItem}
+							editItem={editItem}
+							sort={sort}
+							loading={loading}
+						/>
+					</DragDropContext>
+				</div>
+			</div>
 		</Wrapper>
 	);
 }

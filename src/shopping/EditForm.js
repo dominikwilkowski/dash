@@ -54,7 +54,10 @@ export function EditForm({ text: defaultText, id, handleChange, ...props }) {
 					<LoadingBtn loading={loading}>Save</LoadingBtn>
 				</form>
 				<div
-					onClick={() => setEditing(false)}
+					onClick={() => {
+						setText(defaultText);
+						setEditing(false);
+					}}
 					css={{
 						position: 'fixed',
 						top: 0,
