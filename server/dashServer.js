@@ -62,28 +62,25 @@ if (process.env.LOCAL === 'true') {
 // routes
 server.post('/dash/checkuser', checkUser);
 server.post('/dash/navigation', getNavigation);
-server.post('/dash/shopping', (req, res, next) => getShopping(req, res, next, 'shopping'));
-server.post('/dash/addshopping', (req, res, next) => addShopping(req, res, next, 'shopping'));
-server.post('/dash/editshopping', (req, res, next) => editShopping(req, res, next, 'shopping'));
-server.post('/dash/toggleshopping', (req, res, next) =>
-	toggleDoneShopping(req, res, next, 'shopping')
-);
-server.post('/dash/deleteshopping', (req, res, next) => deleteShopping(req, res, next, 'shopping'));
-server.post('/dash/shoppingother', (req, res, next) =>
-	getShopping(req, res, next, 'shoppingother')
-);
-server.post('/dash/addshoppingother', (req, res, next) =>
-	addShopping(req, res, next, 'shoppingother')
-);
-server.post('/dash/editshoppingother', (req, res, next) =>
-	editShopping(req, res, next, 'shoppingother')
-);
-server.post('/dash/toggleshoppingother', (req, res, next) =>
-	toggleDoneShopping(req, res, next, 'shoppingother')
-);
-server.post('/dash/deleteshoppingother', (req, res, next) =>
-	deleteShopping(req, res, next, 'shoppingother')
-);
+
+['', '2', '3', '4'].forEach((route) => {
+	server.post(`/dash/shopping${route}`, (req, res, next) =>
+		getShopping(req, res, next, `shopping${route}`)
+	);
+	server.post(`/dash/addshopping${route}`, (req, res, next) =>
+		addShopping(req, res, next, `shopping${route}`)
+	);
+	server.post(`/dash/editshopping${route}`, (req, res, next) =>
+		editShopping(req, res, next, `shopping${route}`)
+	);
+	server.post(`/dash/toggleshopping${route}`, (req, res, next) =>
+		toggleDoneShopping(req, res, next, `shopping${route}`)
+	);
+	server.post(`/dash/deleteshopping${route}`, (req, res, next) =>
+		deleteShopping(req, res, next, `shopping${route}`)
+	);
+});
+
 server.post('/dash/gettrash', getTrash);
 server.post('/dash/getdb', getDb);
 server.post('/dash/writedb', writeDb);

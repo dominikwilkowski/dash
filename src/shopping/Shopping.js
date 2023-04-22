@@ -11,7 +11,7 @@ import { Form } from './Form';
 import { List } from './List';
 
 export function Shopping({
-	route = 'shopping',
+	path = 'shopping',
 	toggle = true,
 	trash = false,
 	sort = true,
@@ -21,18 +21,27 @@ export function Shopping({
 	const [loading, setLoading] = useState(true);
 	const [reload, setReload] = useState(false);
 
+	path = path.replaceAll('/', '');
+	if (path === '') {
+		path = 'shopping';
+	}
+
 	const syncItems = useCallback(async () => {
-		const data = await makeRestCall(`/${route}`);
-		setItems(data);
-		setLoading(false);
-	}, [setItems, setLoading, route]);
+		try {
+			const data = await makeRestCall(`/${path}`);
+			setItems(data);
+			setLoading(false);
+		} catch (error) {
+			setLoading(false);
+		}
+	}, [setItems, setLoading, path]);
 
 	useEffect(() => {
 		syncItems();
 		window.addEventListener('focus', syncItems, false);
 
 		return () => window.removeEventListener('focus', syncItems, false);
-	}, [route, syncItems]);
+	}, [syncItems]);
 
 	const reloadState = async () => {
 		setReload(true);
@@ -44,25 +53,25 @@ export function Shopping({
 		event.preventDefault();
 
 		if (text) {
-			const data = await makeRestCall(`/add${route}`, { text });
-			setItems(data[route]);
+			const data = await makeRestCall(`/add${path}`, { text });
+			setItems(data[path]);
 			setInput('');
 		}
 	};
 
 	const toggleItem = async (id) => {
-		const data = await makeRestCall(`/toggle${route}`, { id });
-		setItems(data[route]);
+		const data = await makeRestCall(`/toggle${path}`, { id });
+		setItems(data[path]);
 	};
 
 	const editItem = async (id, text) => {
-		const data = await makeRestCall(`/edit${route}`, { id, text });
-		setItems(data[route]);
+		const data = await makeRestCall(`/edit${path}`, { id, text });
+		setItems(data[path]);
 	};
 
 	const removeItem = async (id) => {
-		const data = await makeRestCall(`/delete${route}`, { id });
-		setItems(data[route]);
+		const data = await makeRestCall(`/delete${path}`, { id });
+		setItems(data[path]);
 	};
 
 	return (

@@ -16,6 +16,7 @@ import { Db } from './db';
 export function App() {
 	const [remoteNav, setRemoteNav] = useState([]);
 	const [user, setUser] = useState(localStorage.getItem('dash-user') || null);
+	const [version, setVersion] = useState('');
 	const [loginError, setLoginError] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [input, setInput] = useState('');
@@ -26,7 +27,8 @@ export function App() {
 			(async function () {
 				try {
 					const data = await makeRestCall('/navigation');
-					setRemoteNav(data);
+					setRemoteNav(data.navigation);
+					setVersion(data.version);
 				} catch (error) {
 					setError(error);
 				}
@@ -35,12 +37,11 @@ export function App() {
 	}, [user]);
 
 	const supportedComponents = {
-		Shopping: <Shopping />,
-		'Shopping Other': <Shopping name="Shopping Other" route="shoppingother" />,
-		Energy: <Energy />,
-		Goals: <Goals />,
-		Mort: <Mort />,
-		Db: <Db />,
+		Shopping: (name, path) => <Shopping name={name} path={path} />,
+		Energy: (name, path) => <Energy name={name} path={path} />,
+		Goals: (name, path) => <Goals name={name} path={path} />,
+		Mort: (name, path) => <Mort name={name} path={path} />,
+		Db: (name, path) => <Db name={name} path={path} />,
 	};
 
 	const handleLogin = async (event) => {
@@ -207,9 +208,9 @@ export function App() {
 								</button>
 							</nav>
 							<Switch>
-								{remoteNav.map(({ name, url }) => (
-									<Route exact path={url} key={url}>
-										{supportedComponents[name]}
+								{remoteNav.map(({ name, url, component }) => (
+									<Route exact path={url} key={name + url}>
+										{supportedComponents[component](name, url)}
 									</Route>
 								))}
 							</Switch>
@@ -217,6 +218,16 @@ export function App() {
 					)}
 				</Fragment>
 			)}
+			<div
+				css={{
+					fontSize: '0.7rem',
+					color: '#fff',
+					padding: '0.5rem',
+					textAlign: 'right',
+				}}
+			>
+				v{version}
+			</div>
 		</main>
 	);
 }

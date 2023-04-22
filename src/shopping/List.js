@@ -6,14 +6,27 @@ import { EditForm } from './EditForm';
 import { AsyncButton } from './AsyncButton';
 
 export function List({ items, removeItem, toggle, toggleItem, editItem, sort }) {
-	const comparator = (a, b) => {
+	if (!Array.isArray(items)) {
+		return null;
+	}
+
+	const comparatorDone = (a, b) => {
 		if (a.isDone !== b.isDone) {
 			return a.isDone ? 1 : -1;
 		}
 
 		return b.id - a.id;
 	};
-	const sortedItems = sort ? items.sort(comparator) : items;
+
+	const comparatorAlphabetical = (a, b) => {
+		if (!a.isDone) {
+			return 0;
+		} else {
+			return a.text.localeCompare(b.text);
+		}
+	};
+
+	const sortedItems = sort ? items.sort(comparatorDone).sort(comparatorAlphabetical) : items;
 
 	return (
 		<ul

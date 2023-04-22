@@ -1,4 +1,5 @@
 const { debug, isUserMissing, getDB } = require('../utils.js');
+const { version } = require('../package.json');
 
 /**
  * Getting the navigation
@@ -16,7 +17,7 @@ function getNavigation(req, res, next) {
 		return next(userMissing);
 	}
 
-	res.send(getDB(user).navigation);
+	res.send({ navigation: getDB(user).navigation, version });
 	return next();
 }
 
