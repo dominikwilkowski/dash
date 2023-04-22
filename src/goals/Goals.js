@@ -5,5 +5,5 @@ import { jsx } from '@emotion/core';
 import { Shopping } from '../shopping';
 
 export function Goals() {
-	return <Shopping route="goals" toggle={false} trash={false} sort={false} />;
+	return <Shopping name="Goals" path="goals" toggle={false} trash={false} />;
 }

@@ -3,7 +3,6 @@ const restify = require('restify');
 const cfonts = require('cfonts');
 require('dotenv').config();
 
-const { getGoals, addGoals, editGoals, deleteGoals } = require('./routes/goals.js');
 const { getEnergy, addEnergy, deleteEnergy } = require('./routes/energy.js');
 const { getMort, addMort, deleteMort } = require('./routes/mort.js');
 const { getNavigation } = require('./routes/navigation.js');
@@ -85,13 +84,15 @@ server.post('/dash/navigation', getNavigation);
 	);
 });
 
+server.post('/dash/goals', (req, res, next) => getShopping(req, res, next, 'goals'));
+server.post('/dash/addgoals', (req, res, next) => addShopping(req, res, next, 'goals'));
+server.post('/dash/editgoals', (req, res, next) => editShopping(req, res, next, 'goals'));
+server.post('/dash/ordergoals', (req, res, next) => orderShopping(req, res, next, 'goals'));
+server.post('/dash/deletegoals', (req, res, next) => deleteShopping(req, res, next, 'goals'));
+
 server.post('/dash/gettrash', getTrash);
 server.post('/dash/getdb', getDb);
 server.post('/dash/writedb', writeDb);
-server.post('/dash/goals', getGoals);
-server.post('/dash/addgoals', addGoals);
-server.post('/dash/editgoals', editGoals);
-server.post('/dash/deletegoals', deleteGoals);
 server.post('/dash/mort', getMort);
 server.post('/dash/addmort', addMort);
 server.post('/dash/deletemort', deleteMort);
