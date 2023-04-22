@@ -10,23 +10,17 @@ export function List({ items, removeItem, toggle, toggleItem, editItem, sort }) 
 		return null;
 	}
 
-	const comparatorDone = (a, b) => {
+	const comparator = (a, b) => {
 		if (a.isDone !== b.isDone) {
 			return a.isDone ? 1 : -1;
+		} else if (a.isDone && b.isDone) {
+			return a.text.localeCompare(b.text);
 		}
 
 		return b.id - a.id;
 	};
 
-	const comparatorAlphabetical = (a, b) => {
-		if (!a.isDone) {
-			return 0;
-		} else {
-			return a.text.localeCompare(b.text);
-		}
-	};
-
-	const sortedItems = sort ? items.sort(comparatorDone).sort(comparatorAlphabetical) : items;
+	const sortedItems = sort ? items.sort(comparator) : items;
 
 	return (
 		<ul
