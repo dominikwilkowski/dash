@@ -67,7 +67,7 @@ const Item = forwardRef(function Item(
 			<EditForm handleChange={editItem} text={text} id={id} />
 			<AsyncButton onClick={() => removeItem(id)} noLoadingReset>
 				<span role="img" aria-label="Delete this item">
-					🗑
+					🗑️
 				</span>
 			</AsyncButton>
 		</li>
@@ -158,6 +158,17 @@ export function List({ items, removeItem, toggle, toggleItem, editItem, sort, lo
 					/>
 				))}
 			</ul>
+			{undoneItems.length + doneItems.length === 0 ? (
+				<div
+					css={{
+						textAlign: 'center',
+						fontSize: '1.5rem',
+						color: '#a8a8a8',
+					}}
+				>
+					Nothing found
+				</div>
+			) : null}
 		</Fragment>
 	);
 }

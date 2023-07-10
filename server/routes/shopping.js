@@ -40,20 +40,24 @@ function addShopping(req, res, next, route) {
 
 	const db = getDB(user);
 	let biggestID = 1;
-	const id =
-		db[route].length === 0
-			? 1
-			: db[route].reduce((_, { id }) => {
-					if (id > biggestID) {
-						biggestID = id;
-					}
-					return biggestID;
-			  }) + 1;
-	db[route].push({ id, text, isDone: false });
+
+	const textBits = text.split(',');
+	textBits.forEach((text) => {
+		const id =
+			db[route].length === 0
+				? 1
+				: db[route].reduce((_, { id }) => {
+						if (id > biggestID) {
+							biggestID = id;
+						}
+						return biggestID;
+				  }) + 1;
+		db[route].push({ id, text, isDone: false });
+	});
 
 	writeDB(user, db);
 
-	res.send({ id, [route]: db[route] });
+	res.send({ [route]: db[route] });
 	return next();
 }
 

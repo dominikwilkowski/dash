@@ -11,10 +11,10 @@
 		"node": ">=8"
 	},
 	"dependencies": {
-		"cfonts": "^2.8.6",
-		"chalk": "^4.1.0",
-		"dotenv": "^8.2.0",
-		"restify": "^8.5.1",
+		"cfonts": "^3",
+		"chalk": "^4",
+		"dotenv": "^16",
+		"restify": "^11",
 		"restify-cors-middleware": "^1.1.1",
 		"restify-errors": "^8.0.2"
 	}

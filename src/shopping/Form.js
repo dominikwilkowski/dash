@@ -5,19 +5,18 @@ import { jsx } from '@emotion/core';
 
 import { LoadingBtn } from '../LoadingBtn';
 
-export function Form({ addItem }) {
+export function Form({ addItem, input, setInput }) {
 	const [loading, setLoading] = useState(false);
-	const [text, setText] = useState('');
 
-	const addingItem = async (event, text, setText) => {
+	const addingItem = async (event, input, setInput) => {
 		setLoading(true);
-		await addItem(event, text, setText);
+		await addItem(event, input, setInput);
 		setLoading(false);
 	};
 
 	return (
 		<form
-			onSubmit={(event) => addingItem(event, text, setText)}
+			onSubmit={(event) => addingItem(event, input, setInput)}
 			css={{
 				display: 'flex',
 				margin: '2rem 0',
@@ -25,8 +24,8 @@ export function Form({ addItem }) {
 		>
 			<input
 				type="text"
-				value={text}
-				onChange={(event) => setText(event.target.value)}
+				value={input}
+				onChange={(event) => setInput(event.target.value)}
 				css={{
 					padding: '0.5rem 0.75rem',
 					fontSize: '1rem',

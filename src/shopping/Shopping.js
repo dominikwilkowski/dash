@@ -21,6 +21,7 @@ export function Shopping({
 	const [items, setItems] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [reload, setReload] = useState(false);
+	const [input, setInput] = useState('');
 
 	path = path.replaceAll('/', '');
 	if (path === '') {
@@ -133,7 +134,7 @@ export function Shopping({
 					refresh
 				</LoadingBtn>
 			</div>
-			<Form addItem={addItem} />
+			<Form addItem={addItem} input={input} setInput={setInput} />
 			<div
 				css={{
 					position: 'relative',
@@ -169,7 +170,7 @@ export function Shopping({
 				>
 					<DragDropContext onDragEnd={onDragEnd}>
 						<List
-							items={items}
+							items={items.filter((item) => item.text.includes(input))}
 							removeItem={removeItem}
 							toggle={toggle}
 							toggleItem={toggleItem}
