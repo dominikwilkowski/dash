@@ -106,14 +106,41 @@ function orderShopping(req, res, next, route) {
 		return next(userMissing);
 	}
 
+	const comparator = (a, b) => {
+		if (a.isDone !== b.isDone) {
+			return a.isDone ? 1 : -1;
+		} else if (a.isDone && b.isDone) {
+			return a.text.localeCompare(b.text);
+		}
+
+		if (sourceId > destinationId) {
+			return b.id - a.id;
+		} else {
+			return a.id - b.id;
+		}
+	};
+
 	const db = getDB(user);
-	db[route] = db[route].map(({ id, ...rest }) =>
-		id == sourceId
-			? { id: destinationId, ...rest }
-			: id == destinationId
-			? { id: sourceId, ...rest }
-			: { id, ...rest }
-	);
+	let within_range = false;
+	let prev_id = 0;
+	let sorted_items = {};
+	db[route] = db[route].sort(comparator).map(({ id, ...rest }) => {
+		if (within_range) {
+			sorted_items = { id: prev_id, ...rest };
+
+			if (id === destinationId) within_range = false;
+		} else {
+			if (id === sourceId) {
+				within_range = true;
+				sorted_items = { id: destinationId, ...rest };
+			} else {
+				sorted_items = { id, ...rest };
+			}
+		}
+
+		prev_id = id;
+		return sorted_items;
+	});
 
 	writeDB(user, db);
 

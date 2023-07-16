@@ -22,6 +22,8 @@ export function Shopping({
 	const [loading, setLoading] = useState(true);
 	const [reload, setReload] = useState(false);
 	const [input, setInput] = useState('');
+	const [undoneItems, setUndoneItems] = useState([]);
+	const [doneItems, setDoneItems] = useState([]);
 
 	path = path.replaceAll('/', '');
 	if (path === '') {
@@ -44,6 +46,18 @@ export function Shopping({
 
 		return () => window.removeEventListener('focus', syncItems, false);
 	}, [syncItems]);
+
+	useEffect(() => {
+		if (sort) {
+			setUndoneItems(items.filter(({ isDone }) => !isDone).sort((a, b) => b.id - a.id));
+			setDoneItems(
+				items.filter(({ isDone }) => isDone).sort((a, b) => a.text.localeCompare(b.text))
+			);
+		} else {
+			setUndoneItems(items.filter(({ isDone }) => !isDone));
+			setDoneItems(items.filter(({ isDone }) => isDone));
+		}
+	}, [items, sort]);
 
 	const reloadState = async () => {
 		setReload(true);
@@ -84,8 +98,8 @@ export function Shopping({
 
 		setLoading(true);
 		const data = await makeRestCall(`/order${path}`, {
-			sourceId: items[result.source.index].id,
-			destinationId: items[result.destination.index].id,
+			sourceId: undoneItems[result.source.index].id,
+			destinationId: undoneItems[result.destination.index].id,
 		});
 		setItems(data[path]);
 		setLoading(false);
@@ -170,7 +184,8 @@ export function Shopping({
 				>
 					<DragDropContext onDragEnd={onDragEnd}>
 						<List
-							items={items.filter((item) => item.text.includes(input))}
+							undoneItems={undoneItems.filter((item) => item.text.includes(input))}
+							doneItems={doneItems.filter((item) => item.text.includes(input))}
 							removeItem={removeItem}
 							toggle={toggle}
 							toggleItem={toggleItem}

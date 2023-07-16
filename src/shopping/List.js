@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
 import { Droppable, Draggable } from 'react-beautiful-dnd';
-import { Fragment, useState, useEffect, forwardRef } from 'react';
+import { Fragment, forwardRef } from 'react';
 import { jsx } from '@emotion/core';
 
 import { EditForm } from './EditForm';
@@ -74,33 +74,27 @@ const Item = forwardRef(function Item(
 	);
 });
 
-export function List({ items, removeItem, toggle, toggleItem, editItem, sort, loading }) {
-	const [undoneItems, setUndoneItems] = useState([]);
-	const [doneItems, setDoneItems] = useState([]);
-
-	useEffect(() => {
-		const sortedItems = sort ? items.sort(comparator) : items;
-		setUndoneItems(sortedItems.filter(({ isDone }) => !isDone));
-		setDoneItems(sortedItems.filter(({ isDone }) => isDone));
-	}, [items, sort]);
-
-	if (!Array.isArray(items)) {
-		return null;
+export function List({
+	undoneItems,
+	doneItems,
+	removeItem,
+	toggle,
+	toggleItem,
+	editItem,
+	sort,
+	loading,
+}) {
+	if (!Array.isArray(undoneItems)) {
+		undoneItems = [];
 	}
 
-	const comparator = (a, b) => {
-		if (a.isDone !== b.isDone) {
-			return a.isDone ? 1 : -1;
-		} else if (a.isDone && b.isDone) {
-			return a.text.localeCompare(b.text);
-		}
-
-		return b.id - a.id;
-	};
+	if (!Array.isArray(doneItems)) {
+		doneItems = [];
+	}
 
 	return (
 		<Fragment>
-			<Droppable droppableId="droppable">
+			<Droppable droppableId="todo_list">
 				{(provided, snapshot) => (
 					<ul
 						{...provided.droppableProps}
