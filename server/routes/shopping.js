@@ -55,6 +55,8 @@ function addShopping(req, res, next, route) {
 		db[route].push({ id, text, isDone: false });
 	});
 
+	db[route] = fixDB(db[route]);
+
 	writeDB(user, db);
 
 	res.send({ [route]: db[route] });
@@ -142,10 +144,32 @@ function orderShopping(req, res, next, route) {
 		return sorted_items;
 	});
 
+	db[route] = fixDB(db[route]);
+
 	writeDB(user, db);
 
 	res.send({ [route]: db[route] });
 	return next();
+}
+
+/**
+ * Fix db in case we find duplicate ids
+ *
+ * @param  {array} db - The database
+ *
+ * @return {array}    - The fixed database
+ */
+function fixDB(db) {
+	if(new Set(db.map(({id}) => id)).size != db.length) {
+		debug('Error found in DB', 'interaction', req);
+
+		let newID = 0;
+		db = db.map(({id, ...rest}) => {
+			newID ++;
+			return {id: newID, ...rest};
+		});
+	}
+	return db;
 }
 
 /**
