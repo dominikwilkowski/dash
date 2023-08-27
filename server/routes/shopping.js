@@ -55,7 +55,7 @@ function addShopping(req, res, next, route) {
 		db[route].push({ id, text, isDone: false });
 	});
 
-	db[route] = fixDB(db[route]);
+	db[route] = fixDB(db[route], req);
 
 	writeDB(user, db);
 
@@ -144,7 +144,7 @@ function orderShopping(req, res, next, route) {
 		return sorted_items;
 	});
 
-	db[route] = fixDB(db[route]);
+	db[route] = fixDB(db[route], req);
 
 	writeDB(user, db);
 
@@ -155,11 +155,12 @@ function orderShopping(req, res, next, route) {
 /**
  * Fix db in case we find duplicate ids
  *
- * @param  {array} db - The database
+ * @param  {array}  db  - The database
+ * @param  {object} req - The request object from express
  *
- * @return {array}    - The fixed database
+ * @return {array}      - The fixed database
  */
-function fixDB(db) {
+function fixDB(db, req) {
 	if(new Set(db.map(({id}) => id)).size != db.length) {
 		debug('Error found in DB', 'interaction', req);
 
