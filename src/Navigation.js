@@ -1,7 +1,8 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 
 import { Link, useLocation } from 'react-router-dom';
-import { jsx } from '@emotion/core';
+import { jsx } from '@emotion/react';
 
 export function Navigation({ nav }) {
 	const { pathname } = useLocation();

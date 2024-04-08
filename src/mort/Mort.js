@@ -1,3 +1,4 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 
 import differenceInCalendarDays from 'date-fns/differenceInCalendarDays';
@@ -8,7 +9,7 @@ import parseISO from 'date-fns/parseISO';
 import getYear from 'date-fns/getYear';
 import isAfter from 'date-fns/isAfter';
 import format from 'date-fns/format';
-import { jsx } from '@emotion/core';
+import { jsx } from '@emotion/react';
 
 import { rotation } from '../LoadingBtn';
 import { makeRestCall } from '../utils';
@@ -275,7 +276,7 @@ export function Mort() {
 							? {
 									background: 'linear-gradient(to right, #ff416c, #ff4b2b)',
 									color: '#fff',
-							  }
+								}
 							: { background: '#11FFBD' };
 						if (isFuture) {
 							background = { background: '#fff' };

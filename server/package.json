@@ -15,7 +15,7 @@
 		"chalk": "^4",
 		"dotenv": "^16",
 		"restify": "^11",
-		"restify-cors-middleware": "^1.1.1",
-		"restify-errors": "^8.0.2"
+		"restify-cors-middleware": "^1",
+		"restify-errors": "^8"
 	}
 }

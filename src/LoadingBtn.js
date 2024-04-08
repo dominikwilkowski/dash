@@ -1,6 +1,7 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 
-import { jsx, keyframes } from '@emotion/core';
+import { jsx, keyframes } from '@emotion/react';
 
 export const rotation = keyframes({
 	to: {

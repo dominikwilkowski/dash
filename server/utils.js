@@ -34,7 +34,7 @@ function debug(text, code, req) {
 				` [${(req.headers['x-forwarded-for'] || req.connection.remoteAddress || '')
 					.split(',')[0]
 					.trim()}]`
-		  )
+			)
 		: '';
 	const time = chalk.magentaBright(new Date().toISOString());
 

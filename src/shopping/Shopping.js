@@ -1,8 +1,9 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 
 import { useState, useEffect, useCallback } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { jsx } from '@emotion/core';
+import { jsx } from '@emotion/react';
 
 import { LoadingBtn, rotation } from '../LoadingBtn';
 import { makeRestCall } from '../utils';

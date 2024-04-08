@@ -1,8 +1,9 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 
 import differenceInWeeks from 'date-fns/differenceInWeeks';
 import { useState, useEffect } from 'react';
-import { jsx, Global } from '@emotion/core';
+import { jsx, Global } from '@emotion/react';
 import parseISO from 'date-fns/parseISO';
 
 import { makeRestCall } from '../utils';

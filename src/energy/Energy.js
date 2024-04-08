@@ -1,3 +1,4 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 
 import getDaysInMonth from 'date-fns/getDaysInMonth';
@@ -6,7 +7,7 @@ import getMonth from 'date-fns/getMonth';
 import getYear from 'date-fns/getYear';
 import isAfter from 'date-fns/isAfter';
 import format from 'date-fns/format';
-import { jsx } from '@emotion/core';
+import { jsx } from '@emotion/react';
 
 import { rotation } from '../LoadingBtn';
 import { makeRestCall } from '../utils';
@@ -228,7 +229,7 @@ export function Energy() {
 									backgroundImage:
 										'linear-gradient(45deg, #ffffff 31.25%, #aaa 31.25%, #aaa 50%, #ffffff 50%, #ffffff 81.25%, #aaa 81.25%, #aaa 100%)',
 									backgroundSize: '11.31px 11.31px',
-							  };
+								};
 						if (isFuture) {
 							background = { background: '#fff' };
 						}

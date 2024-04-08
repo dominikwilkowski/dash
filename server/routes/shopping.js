@@ -51,7 +51,7 @@ function addShopping(req, res, next, route) {
 							biggestID = id;
 						}
 						return biggestID;
-				  }) + 1;
+					}) + 1;
 		db[route].push({ id, text, isDone: false });
 	});
 
@@ -161,13 +161,13 @@ function orderShopping(req, res, next, route) {
  * @return {array}      - The fixed database
  */
 function fixDB(db, req) {
-	if(new Set(db.map(({id}) => id)).size != db.length) {
+	if (new Set(db.map(({ id }) => id)).size != db.length) {
 		debug('Error found in DB', 'interaction', req);
 
 		let newID = 0;
-		db = db.map(({id, ...rest}) => {
-			newID ++;
-			return {id: newID, ...rest};
+		db = db.map(({ id, ...rest }) => {
+			newID++;
+			return { id: newID, ...rest };
 		});
 	}
 	return db;

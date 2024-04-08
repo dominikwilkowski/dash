@@ -1,10 +1,12 @@
 import * as serviceWorker from './serviceWorker';
-import { Global } from '@emotion/core';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
+import { Global } from '@emotion/react';
 import { App } from './App';
 import React from 'react';
 
-ReactDOM.render(
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(
 	<React.StrictMode>
 		<Global
 			styles={{
@@ -26,8 +28,7 @@ ReactDOM.render(
 			}}
 		/>
 		<App />
-	</React.StrictMode>,
-	document.getElementById('root')
+	</React.StrictMode>
 );
 
 // If you want your app to work offline and load faster, you can change

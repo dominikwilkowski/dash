@@ -1,7 +1,8 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 
 import { useState, useEffect } from 'react';
-import { jsx } from '@emotion/core';
+import { jsx } from '@emotion/react';
 
 import { Wrapper } from '../Wrapper';
 import { makeRestCall } from '../utils';

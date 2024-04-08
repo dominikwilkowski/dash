@@ -1,8 +1,9 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 
-import { HashRouter as Router, Switch, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { Fragment, useEffect, useState } from 'react';
-import { jsx } from '@emotion/core';
+import { jsx } from '@emotion/react';
 
 import { Navigation } from './Navigation';
 import { LoadingBtn } from './LoadingBtn';
@@ -189,13 +190,16 @@ export function App() {
 							>
 								<Navigation nav={remoteNav} />
 							</nav>
-							<Switch>
+							<Routes>
 								{remoteNav.map(({ name, url, component }) => (
-									<Route exact path={url} key={name + url}>
-										{supportedComponents[component](name, url)}
-									</Route>
+									<Route
+										key={name + url}
+										exact
+										path={url}
+										element={supportedComponents[component](name, url)}
+									/>
 								))}
-							</Switch>
+							</Routes>
 						</Router>
 					)}
 				</Fragment>

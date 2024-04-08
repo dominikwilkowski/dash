@@ -1,7 +1,8 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 
 import { Fragment, useState } from 'react';
-import { jsx } from '@emotion/core';
+import { jsx } from '@emotion/react';
 
 import { LoadingBtn } from '../LoadingBtn';
 

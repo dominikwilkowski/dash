@@ -1,8 +1,9 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { Fragment, forwardRef } from 'react';
-import { jsx } from '@emotion/core';
+import { jsx } from '@emotion/react';
 
 import { EditForm } from './EditForm';
 import { AsyncButton } from './AsyncButton';
