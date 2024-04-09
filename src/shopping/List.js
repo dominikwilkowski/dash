@@ -1,12 +1,31 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 
+import { Fragment, forwardRef, useEffect, useState } from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
-import { Fragment, forwardRef } from 'react';
 import { jsx } from '@emotion/react';
 
 import { EditForm } from './EditForm';
 import { AsyncButton } from './AsyncButton';
+
+function StrictModeDroppable({ children, ...props }) {
+	const [enabled, setEnabled] = useState(false);
+
+	useEffect(() => {
+		const animation = requestAnimationFrame(() => setEnabled(true));
+
+		return () => {
+			cancelAnimationFrame(animation);
+			setEnabled(false);
+		};
+	}, []);
+
+	if (!enabled) {
+		return null;
+	}
+
+	return <Droppable {...props}>{children}</Droppable>;
+}
 
 const Item = forwardRef(function Item(
 	{ toggle, toggleItem, removeItem, id, isDone, editItem, text, ...rest },
@@ -95,7 +114,7 @@ export function List({
 
 	return (
 		<Fragment>
-			<Droppable droppableId="todo_list">
+			<StrictModeDroppable droppableId="shopping_list">
 				{(provided, snapshot) => (
 					<ul
 						{...provided.droppableProps}
@@ -132,7 +151,7 @@ export function List({
 						{provided.placeholder}
 					</ul>
 				)}
-			</Droppable>
+			</StrictModeDroppable>
 			<ul
 				css={{
 					listStyle: 'none',
