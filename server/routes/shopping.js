@@ -52,7 +52,7 @@ function addShopping(req, res, next, route) {
 						}
 						return biggestID;
 					}) + 1;
-		db[route].push({ id, text, isDone: false });
+		db[route].push({ id, text: text.trim(), isDone: false });
 	});
 
 	db[route] = fixDB(db[route], req);
@@ -82,7 +82,7 @@ function editShopping(req, res, next, route) {
 
 	const db = getDB(user);
 	db[route] = db[route].map(({ id: itemID, text: itemText, ...rest }) =>
-		itemID == id ? { id, text, ...rest } : { id: itemID, text: itemText, ...rest }
+		itemID == id ? { id, text: text.trim(), ...rest } : { id: itemID, text: itemText, ...rest }
 	);
 
 	writeDB(user, db);
@@ -191,9 +191,28 @@ function toggleDoneShopping(req, res, next, route) {
 	}
 
 	const db = getDB(user);
-	db[route] = db[route].map(({ id: itemID, ...rest }) =>
-		itemID == id ? { id: itemID, ...rest, isDone: !rest.isDone } : { id: itemID, ...rest }
-	);
+	db[route] = db[route].map(({ id: itemID, ...rest }) => {
+		if (itemID == id) {
+			if (rest.isDone) {
+				let biggestID = 1;
+				let newID =
+					db[route].reduce((_, { id }) => {
+						if (id > biggestID) {
+							biggestID = id;
+						}
+						return biggestID;
+					}) + 1;
+
+				debug(`Toggle assigned new ID (${newID}) to old (${itemID})`, 'interaction', req);
+
+				return { id: newID, ...rest, isDone: !rest.isDone };
+			} else {
+				return { id: itemID, ...rest, isDone: !rest.isDone };
+			}
+		} else {
+			return { id: itemID, ...rest };
+		}
+	});
 
 	writeDB(user, db);
 
