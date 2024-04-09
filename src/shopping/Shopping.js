@@ -185,8 +185,12 @@ export function Shopping({
 				>
 					<DragDropContext onDragEnd={onDragEnd}>
 						<List
-							undoneItems={undoneItems.filter((item) => item.text.includes(input))}
-							doneItems={doneItems.filter((item) => item.text.includes(input))}
+							undoneItems={undoneItems.filter((item) =>
+								item.text.toLowerCase().includes(input.toLowerCase())
+							)}
+							doneItems={doneItems.filter((item) =>
+								item.text.toLowerCase().includes(input.toLowerCase())
+							)}
 							removeItem={removeItem}
 							toggle={toggle}
 							toggleItem={toggleItem}
