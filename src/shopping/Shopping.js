@@ -79,6 +79,8 @@ export function Shopping({
 	const toggleItem = async (id) => {
 		const data = await makeRestCall(`/toggle${path}`, { id });
 		setItems(data[path]);
+		setInput('');
+		document.getElementById('search_input').focus();
 	};
 
 	const editItem = async (id, text) => {

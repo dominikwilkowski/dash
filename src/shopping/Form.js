@@ -26,6 +26,7 @@ export function Form({ addItem, input, setInput }) {
 			<input
 				type="text"
 				value={input}
+				id="search_input"
 				onChange={(event) => setInput(event.target.value)}
 				css={{
 					padding: '0.5rem 0.75rem',
