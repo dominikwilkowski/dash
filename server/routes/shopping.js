@@ -39,19 +39,13 @@ function addShopping(req, res, next, route) {
 	}
 
 	const db = getDB(user);
-	let biggestID = 1;
 
 	const textBits = text.split(',');
 	textBits.forEach((text) => {
 		const id =
 			db[route].length === 0
 				? 1
-				: db[route].reduce((_, { id }) => {
-						if (id > biggestID) {
-							biggestID = id;
-						}
-						return biggestID;
-					}) + 1;
+				: db[route].reduce((maxId, item) => Math.max(maxId, item.id), 1) + 1;
 		db[route].push({ id, text: text.trim(), isDone: false });
 	});
 
@@ -194,14 +188,7 @@ function toggleDoneShopping(req, res, next, route) {
 	db[route] = db[route].map(({ id: itemID, ...rest }) => {
 		if (itemID == id) {
 			if (rest.isDone) {
-				let biggestID = 1;
-				let newID =
-					db[route].reduce((_, { id }) => {
-						if (id > biggestID) {
-							biggestID = id;
-						}
-						return biggestID;
-					}) + 1;
+				let newID = db[route].reduce((maxId, item) => Math.max(maxId, item.id), 1) + 1;
 
 				debug(`Toggle assigned new ID (${newID}) to old (${itemID})`, 'interaction', req);
 

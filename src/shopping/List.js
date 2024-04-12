@@ -8,6 +8,8 @@ import { jsx } from '@emotion/react';
 import { EditForm } from './EditForm';
 import { AsyncButton } from './AsyncButton';
 
+// Fix for strict mode issue with react-beautiful-dnd:
+// https://github.com/atlassian/react-beautiful-dnd/issues/2350
 function StrictModeDroppable({ children, ...props }) {
 	const [enabled, setEnabled] = useState(false);
 
