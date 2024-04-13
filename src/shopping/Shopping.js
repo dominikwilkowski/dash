@@ -86,11 +86,15 @@ export function Shopping({
 	const editItem = async (id, text) => {
 		const data = await makeRestCall(`/edit${path}`, { id, text });
 		setItems(data[path]);
+		setInput('');
+		document.getElementById('search_input').focus();
 	};
 
 	const removeItem = async (id) => {
 		const data = await makeRestCall(`/delete${path}`, { id });
 		setItems(data[path]);
+		setInput('');
+		document.getElementById('search_input').focus();
 	};
 
 	const onDragEnd = async (result) => {
@@ -106,6 +110,8 @@ export function Shopping({
 		});
 		setItems(data[path]);
 		setLoading(false);
+		setInput('');
+		document.getElementById('search_input').focus();
 	};
 
 	return (
