@@ -19,6 +19,7 @@ const DEBUG = process.argv.includes('debug') ? true : false;
 const USERS = {
 	[process.env.USER1]: 'dom',
 	[process.env.USER2]: 'wilkowski',
+	[process.env.USER3]: 'tom',
 };
 
 /**
